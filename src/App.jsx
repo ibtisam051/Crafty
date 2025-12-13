@@ -8,7 +8,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
 import ArtistPage from "./pages/ArtistPage";
 import ArtistProfilePage from "./pages/ArtistProfilePage";
-import "./App.css";
+import './styles/global.css';
 
 function App() {
   return (

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import artists, { artistReviews } from "../components/artistsData";
+import '../styles/artistProfile.css';
 
 function ArtistProfilePage() {
   const { id } = useParams();
@@ -34,7 +35,6 @@ function ArtistProfilePage() {
 
   return (
     <>
-      {/* Artist Profile Header */}
       <div className="artist-profile-container">
         <div className="artist-profile-left">
           <img src={artist.image} alt={artist.name} className="artist-profile-image" />

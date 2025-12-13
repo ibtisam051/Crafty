@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import '../styles/checkout.css';
 
 function Checkout() {
   const location = useLocation();
@@ -12,7 +13,7 @@ function Checkout() {
     phone: "",
     address: "",
     town: "",
-    elevationDate: "",
+    date: "",
     cardNumber: "",
     cardHolder: "",
     cvc: "",
@@ -46,9 +47,10 @@ function Checkout() {
   return (
     <div className="checkout-container">
       <div className="checkout-left">
-        {/* Billing Info */}
         <form onSubmit={handleSubmit}>
-          <div className="checkout-section">
+
+          {/* ================= Step 1: Billing Info ================= */}
+          <div className="checkout-card">
             <h3>Billing Info</h3>
             <p className="step-label">Step 1 of 3</p>
 
@@ -103,11 +105,10 @@ function Checkout() {
             </div>
           </div>
 
-          {/* Payment Method */}
-          <div className="checkout-section">
+          {/* ================= Step 2: Payment ================= */}
+          <div className="checkout-card">
             <h3>Payment Method</h3>
             <p className="step-label">Step 2 of 3</p>
-            <p className="section-desc">Please select your preferred payment method</p>
 
             <div className="payment-options">
               <label className="payment-option">
@@ -135,8 +136,17 @@ function Checkout() {
                         required
                       />
                     </div>
+                    <div className="form-group">
+                      <label>Expiration Date</label>
+                      <input
+                        type="date"
+                        name="date"
+                        value={formData.date}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
                   </div>
-
                   <div className="form-row">
                     <div className="form-group">
                       <label>Card Holder</label>
@@ -163,8 +173,8 @@ function Checkout() {
                   </div>
 
                   <div className="payment-logos">
-                    <img src="https://via.placeholder.com/40x25?text=VISA" alt="Visa" />
-                    <img src="https://via.placeholder.com/40x25?text=MC" alt="Mastercard" />
+                    <img src="https://e7.pngegg.com/pngimages/648/10/png-clipart-visa-logo-credit-card-visa-debit-card-payment-card-mastercard-visa-blue-text.png" alt="Visa" />
+                    <img src="https://banner2.cleanpng.com/lnd/20241123/ry/85dda930e3465f586e2b20700028d0.webp" alt="Mastercard" />
                   </div>
                 </div>
               )}
@@ -182,17 +192,16 @@ function Checkout() {
 
               {formData.paymentMethod === "paypal" && (
                 <div className="paypal-logo">
-                  <img src="https://via.placeholder.com/100x40?text=PayPal" alt="PayPal" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/120px-PayPal.svg.png?20241230110020" alt="PayPal" />
                 </div>
               )}
             </div>
           </div>
 
-          {/* Confirmation */}
-          <div className="checkout-section">
+          {/* ================= Step 3: Confirmation ================= */}
+          <div className="checkout-card">
             <h3>Confirmation</h3>
             <p className="step-label">Step 3 of 3</p>
-            <p className="section-desc">We are getting to the end. Just fill in the below and we'll set up your order(confirm).</p>
 
             <div className="checkbox-group">
               <label>
@@ -202,7 +211,7 @@ function Checkout() {
                   checked={formData.agreeMarketing}
                   onChange={handleChange}
                 />
-                I agree with sending an marketing and newsletter emails. No spam, promised!
+                I agree with sending marketing and newsletter emails.
               </label>
               <label>
                 <input
@@ -212,26 +221,27 @@ function Checkout() {
                   onChange={handleChange}
                   required
                 />
-                I agree with our terms and conditions and privacy policy
+                I agree with terms and conditions and privacy policy
               </label>
             </div>
 
-            <button type="submit" className="buy-now-btn" style={{ width: "100%", marginTop: "20px" }}>
+            <button type="submit" className="buy-now-btn">
               Buy Now
             </button>
-          </div>
 
-          <div className="security-info">
-            <span style={{ fontSize: "20px", marginRight: "8px" }}>🔒</span>
-            <div>
-              <p style={{ fontWeight: 600, margin: "0 0 4px 0" }}>All your data are safe</p>
-              <p style={{ fontSize: "12px", color: "#999", margin: 0 }}>We are using the most advanced security to keep your information safe</p>
+            <div className="security-info">
+              <span>🔒</span>
+              <div>
+                <p>All your data are safe</p>
+                <p>We are using the most advanced security to keep your information safe</p>
+              </div>
             </div>
           </div>
+
         </form>
       </div>
 
-      {/* Order Summary */}
+      {/* Right Side - Order Summary */}
       <div className="checkout-right">
         <div className="order-summary">
           <h3>Order Summary</h3>
@@ -246,7 +256,6 @@ function Checkout() {
                   <span style={{ fontSize: "12px", color: "#777", marginLeft: "4px" }}>440 Reviewers</span>
                 </div>
               </div>
-              <div className="item-price">${product.price}.00</div>
             </div>
           )}
 
@@ -259,15 +268,18 @@ function Checkout() {
               <span>Tax</span>
               <span>${tax}</span>
             </div>
-            <div className="price-row" style={{ paddingTop: "12px", borderTop: "1px solid #ddd" }}>
-              <span style={{ fontWeight: 600 }}>Total Order Price</span>
-              <span style={{ fontWeight: 600, fontSize: "18px" }}>${total}</span>
-            </div>
-          </div>
-
-          <div className="add-coupon">
+            <div className="add-coupon">
             <input type="text" placeholder="Add coupon code" />
             <button type="button">Apply now</button>
+          </div>
+          
+            <div className="price-row total-row">
+              <span>Total Order Price</span>
+              <span>${total}</span>
+            </div>
+            <div className="price-row">
+              <span>Overall price and includes order discount</span>
+          </div>
           </div>
         </div>
       </div>

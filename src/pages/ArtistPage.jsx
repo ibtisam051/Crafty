@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import artists, { artistTypes } from "../components/artistsData";
+import '../styles/artistPage.css';
 
 function ArtistPage() {
   const navigate = useNavigate();
@@ -41,62 +42,56 @@ function ArtistPage() {
 
   return (
     <div className="artist-page-container">
-      {/* Sidebar */}
-      <div className="artist-sidebar">
-        <h3 className="artist-sidebar-title">TYPE</h3>
-        {artistTypes.map((type) => (
-          <label key={type.name} className="artist-filter-label">
-            <input
-              type="checkbox"
-              checked={selectedTypes.includes(type.name)}
-              onChange={() => toggleType(type.name)}
-            />
-            <span>
+      <aside className="sidebar">
+        <h4 className="sidebar-title">TYPE</h4>
+        <div className="filters-list">
+          {artistTypes.map((type) => (
+            <label key={type.name}>
+              <input
+                type="checkbox"
+                checked={selectedTypes.includes(type.name)}
+                onChange={() => toggleType(type.name)}
+              />
               {type.name} <span className="filter-count">({type.count})</span>
-            </span>
-          </label>
-        ))}
-      </div>
-
-      {/* Main Content */}
-      <div className="artist-main">
+            </label>
+          ))}
+        </div>
+      </aside>
+      <main className="artist-main">
         <div className="artist-grid">
           {displayedArtists.map((artist) => (
             <div key={artist.id} className="artist-card">
+              {/* Top: Name + Type + Like */}
+              <div className="artist-card-top">
+                <div className="artist-name-type">
+                  <p className="artist-name">{artist.name}</p>
+                  <p className="artist-type">{artist.type}</p>
+                </div>
+                <button
+                  className="artist-like-btn"
+                  onClick={() => toggleLike(artist.id)}
+                >
+                  {likedArtists[artist.id] ? "❤️" : "🤍"}
+                </button>
+              </div>
               <div className="artist-card-image">
                 <img src={artist.image} alt={artist.name} />
               </div>
-
-              <div className="artist-card-info">
-                <div className="artist-header">
-                  <div>
-                    <h3 className="artist-name">{artist.name}</h3>
-                    <p className="artist-type">{artist.type}</p>
-                  </div>
-                  <button
-                    className="artist-like-btn"
-                    onClick={() => toggleLike(artist.id)}
-                  >
-                    {likedArtists[artist.id] ? "❤️" : "🤍"}
-                  </button>
-                </div>
-                <button className="view-profile-btn" onClick={() => handleViewProfile(artist.id)}>View Profile</button>
-              </div>
+              <button
+                className="view-profile-btn"
+                onClick={() => handleViewProfile(artist.id)}
+              >
+                View Profile
+              </button>
             </div>
           ))}
         </div>
-
         {filteredArtists.length > 6 && !showMore && (
-          <div className="show-more-artist">
-            <button
-              className="show-more-artist-btn"
-              onClick={() => setShowMore(true)}
-            >
-              Show more artist
-            </button>
+          <div className="load-more">
+            <button onClick={() => setShowMore(true)}>Show more artists</button>
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 }

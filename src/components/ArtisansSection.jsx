@@ -1,5 +1,6 @@
 import React from "react";
 import ArtisanCard from "./ArtisanCard";
+import '../styles/artisans.css';
 
 function ArtisansSection() {
   const artisans = [
@@ -9,7 +10,7 @@ function ArtisansSection() {
       role: "Master Weaver",
       about:
         "With over 30 years of experience, Ahmad creates intricate pashmina shawls using traditional techniques passed down through five generations.",
-      image: "https://i.pravatar.cc/150?img=32" 
+      image: "https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg" 
     },
     {
       id: 2,
@@ -17,7 +18,7 @@ function ArtisansSection() {
       role: "Pottery Craftsman",
       about:
         "Hassan specializes in the ancient art of blue pottery, bringing modern aesthetics to centuries-old craft from Multan.",
-      image: "https://i.pravatar.cc/150?img=15" 
+      image: "https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg" 
     },
     {
       id: 3,
@@ -25,7 +26,7 @@ function ArtisansSection() {
       role: "Embroidery Artist",
       about:
         "Ayesha's detailed embroidery work transforms ordinary fabrics into wearable art, celebrating Pakistan's rich textile heritage.",
-      image: "https://i.pravatar.cc/150?img=28" 
+      image: "https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg" 
     }
   ];
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-function ProductCard({ id, title, category, price, image }) {
+function ProductCard({ id, title, category, price, image, variant = "home" }) {
   const [liked, setLiked] = useState(false);
 
   const handleLikeClick = (e) => {
@@ -10,8 +10,9 @@ function ProductCard({ id, title, category, price, image }) {
   };
 
   return (
-    <Link to={`/product/${id}`} className="product-card-link">
-      <div className="product-card">
+    <Link to={`/product/${id}`} className={`product-card-link ${variant}`}>
+      <div className={`product-card ${variant}`}>
+        
         <div className="product-card-top">
           <div>
             <h4 className="product-title">{title}</h4>

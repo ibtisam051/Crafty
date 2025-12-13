@@ -1,27 +1,48 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import products from "../components/productsData";
+import '../styles/productDetail.css';
 
 const sampleReviews = [
   {
     id: 1,
     name: "Omar",
     location: "Lahore",
-    avatar: "https://i.pravatar.cc/45?img=32",
+    avatar: "https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg",
     date: "21 July 2025",
     rating: 5,
     text:
-      "I was looking for something traditional yet sharp, and these khussas were exactly it. The quality is fantastic and the fit was true to size. The gold details are what really make them stand out.",
+      "I was looking for something traditional yet sharp, and these khussas were exactly it. The quality is fantastic and the fit was true to size. The gold details are what really make them stand out. Will be buying in another color soon!",
   },
   {
     id: 2,
     name: "Ayesha",
     location: "Karachi",
-    avatar: "https://i.pravatar.cc/45?img=15",
+    avatar: "https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg",
     date: "20 July 2025",
     rating: 5,
     text:
-      "The craftsmanship is even more beautiful in person. The golden thread against the black leather is so royal. Definitely worth every rupee.",
+      "The craftsmanship is even more beautiful in person. The golden thread against the black leather is so royal. I got so many compliments at my friend's wedding! They were surprisingly comfortable to wear all night. Definitely worth every rupee.",
+  },
+  {
+    id: 3,
+    name: "Ali",
+    location: "Islamabad",
+    avatar: "https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg",
+    date: "18 July 2025",
+    rating: 4,
+    text:
+      "Beautiful craftsmanship and authentic design. The only reason I'm giving 4 stars is because they were slightly tight at first, but they stretched to fit perfectly after a day of wear.",
+  },
+  {
+    id: 4,
+    name: "Fatima",
+    location: "Rawalpindi",
+    avatar: "https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg",
+    date: "15 July 2025",
+    rating: 5,
+    text:
+      "Absolutely stunning! The golden embroidery is even more detailed in person. Received many compliments at a traditional event. Will definitely order more colors.",
   },
 ];
 
@@ -30,10 +51,13 @@ function ProductDetail() {
   const navigate = useNavigate();
   const product = products.find((p) => p.id === Number(id));
   const [selectedImage, setSelectedImage] = useState(product ? product.image : "");
+  const [showAllReviews, setShowAllReviews] = useState(false);
 
   const handleBuyNow = () => {
     navigate("/checkout", { state: { product } });
   };
+
+  const displayedReviews = showAllReviews ? sampleReviews : sampleReviews.slice(0, 2);
 
   if (!product) return <h2>Product not found</h2>;
 
@@ -41,45 +65,67 @@ function ProductDetail() {
     <>
       <div className="product-detail-container">
         <div className="product-detail-left">
-          <img src={selectedImage} alt={product.title} className="main-image" />
+          <img 
+            src={selectedImage} 
+            alt={product.title} 
+            className="main-image" 
+          />
 
           <div className="thumbnail-row">
-            {/* thumbnails - reuse the same image if only one provided */}
-            {[product.image, product.image, product.image].map((src, idx) => (
+            {[
+              product.image,
+              "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=300&fit=crop",
+              "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=300&fit=crop",
+              "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=400&h=300&fit=crop"
+            ].map((src, idx) => (
               <img
                 key={idx}
                 src={src}
-                alt={`${product.title} ${idx + 1}`}
+                alt={`${product.title} view ${idx + 1}`}
                 onClick={() => setSelectedImage(src)}
+                className={selectedImage === src ? "active" : ""}
               />
             ))}
           </div>
         </div>
 
         <div className="product-detail-right">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "20px" }}>
             <div>
               <h2 className="product-title">{product.title}</h2>
               <div className="rating-row">
-                <span style={{ color: "#fbbf24", marginRight: 6 }}>★★★★★</span>
-                <span style={{ color: "#777", fontSize: 14 }}>440+ Reviewer</span>
+                <span className="stars">★★★★★</span>
+                <span className="review-count">440+ Reviewer</span>
               </div>
             </div>
 
-            <div style={{ color: "#ff4d6d", fontSize: 20 }}>❤</div>
+            <div style={{ 
+              color: "#ff4d6d", 
+              fontSize: "28px", 
+              cursor: "pointer", 
+              padding: "8px",
+              transition: "transform 0.2s"
+            }} 
+            onMouseEnter={(e) => e.target.style.transform = "scale(1.1)"}
+            onMouseLeave={(e) => e.target.style.transform = "scale(1)"}
+            >
+              ❤
+            </div>
           </div>
 
           <p className="product-description">
-            A classic {product.title}, elegantly detailed with golden embroidery. Handcrafted for a perfect blend of traditional style and modern sophistication.
+            A classic black {product.title.split(' ')[0]}, elegantly detailed with golden embroidery. Handcrafted for a perfect blend of traditional style and modern sophistication.
           </p>
 
           <div className="category-row">
-            Category <span style={{ marginLeft: 6, color: "#3b82f6" }}>{product.category}</span>
+            Category: <span>{product.category}</span>
           </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div className="price-button-row">
             <div className="product-price">${product.price}.00</div>
-            <button className="buy-now-btn" onClick={handleBuyNow}>Buy Now</button>
+            <button className="buy-now-btn" onClick={handleBuyNow}>
+              Buy Now
+            </button>
           </div>
         </div>
       </div>
@@ -87,30 +133,40 @@ function ProductDetail() {
       <div className="reviews-container">
         <div className="review-header">
           <span>Reviews</span>
-          <div style={{ marginLeft: 8, background: "#eef2ff", color: "#3b82f6", padding: "4px 8px", borderRadius: 6 }}>13</div>
+          <div className="review-count-badge">15</div>
         </div>
 
-        {sampleReviews.map((r) => (
-          <div key={r.id} className="review-item">
-            <img src={r.avatar} alt={r.name} />
+        {displayedReviews.map((review) => (
+          <div key={review.id} className="review-item">
+            <img src={review.avatar} alt={review.name} />
             <div className="review-content">
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
                 <div>
-                  <div className="review-name">{r.name}</div>
-                  <div className="review-location">{r.location}</div>
+                  <div className="review-name">{review.name}</div>
+                  <div className="review-location">{review.location}</div>
                 </div>
                 <div style={{ textAlign: "right" }}>
-                  <div style={{ color: "#fbbf24" }}>{'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}</div>
-                  <div className="review-date" style={{ color: "#999", fontSize: 12 }}>{r.date}</div>
+                  <div style={{ color: "#fbbf24", fontSize: "16px", marginBottom: "5px" }}>
+                    {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
+                  </div>
+                  <div className="review-date">{review.date}</div>
                 </div>
               </div>
 
-              <div className="review-text" style={{ marginTop: 8 }}>{r.text}</div>
+              <div className="review-text">{review.text}</div>
             </div>
           </div>
         ))}
 
-        <div className="show-more">Show All ▾</div>
+        <div 
+          className="show-more" 
+          onClick={() => setShowAllReviews(!showAllReviews)}
+        >
+          <span className="show-text">
+  {showAllReviews ? "Show Less" : "Show All"}
+</span>
+
+        </div>
       </div>
     </>
   );

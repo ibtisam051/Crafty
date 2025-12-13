@@ -11,7 +11,6 @@ function ProductPage() {
   const [maxPrice, setMaxPrice] = useState(300);
   const [displayCount, setDisplayCount] = useState(6);
 
-  // Calculate counts for each category
   const categoryCounts = useMemo(() => {
     const counts = {};
     products.forEach((product) => {
@@ -20,12 +19,10 @@ function ProductPage() {
     return counts;
   }, []);
 
-  // Get all unique categories
   const allCategories = useMemo(() => {
     return [...new Set(products.map((p) => p.category))];
   }, []);
 
-  // Filter products based on selected filters and price
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       const categoryMatch = selectedFilters[product.category];
@@ -34,7 +31,6 @@ function ProductPage() {
     });
   }, [selectedFilters, maxPrice]);
 
-  // Display only the first displayCount products
   const displayedProducts = filteredProducts.slice(0, displayCount);
 
   const handleFilterChange = (category) => {

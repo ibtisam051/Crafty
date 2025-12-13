@@ -1,5 +1,4 @@
 const products = [
-  // Textiles (10 items)
   { id: 1, title: "Shawl", category: "Textiles", price: 99, image: "/shawl.png" },
   { id: 2, title: "Wool Scarf", category: "Textiles", price: 75, image: "/shawl.png" },
   { id: 3, title: "Cotton Fabric", category: "Textiles", price: 45, image: "/shawl.png" },
@@ -10,8 +9,6 @@ const products = [
   { id: 8, title: "Handwoven Textile", category: "Textiles", price: 110, image: "/shawl.png" },
   { id: 9, title: "Floral Print Cloth", category: "Textiles", price: 55, image: "/shawl.png" },
   { id: 10, title: "Vintage Weave", category: "Textiles", price: 95, image: "/shawl.png" },
-  
-  // Pottery (12 items)
   { id: 11, title: "Vase Set", category: "Pottery", price: 80, image: "/vase.png" },
   { id: 12, title: "Blue Pot", category: "Pottery", price: 65, image: "/vase.png" },
   { id: 13, title: "Ceramic Bowl", category: "Pottery", price: 45, image: "/vase.png" },
@@ -24,8 +21,6 @@ const products = [
   { id: 20, title: "Blue Vase", category: "Pottery", price: 95, image: "/vase.png" },
   { id: 21, title: "Glazed Bowl", category: "Pottery", price: 60, image: "/vase.png" },
   { id: 22, title: "Artisan Vessel", category: "Pottery", price: 105, image: "/vase.png" },
-  
-  // Footwear (16 items)
   { id: 23, title: "Khussa Shoes", category: "Footwear", price: 96, image: "/khusa.jpg" },
   { id: 24, title: "Leather Sandals", category: "Footwear", price: 65, image: "/khusa.jpg" },
   { id: 25, title: "Embroidered Shoes", category: "Footwear", price: 88, image: "/khusa.jpg" },
@@ -42,8 +37,6 @@ const products = [
   { id: 36, title: "Ethnic Shoes", category: "Footwear", price: 92, image: "/khusa.jpg" },
   { id: 37, title: "Casual Khussa", category: "Footwear", price: 80, image: "/khusa.jpg" },
   { id: 38, title: "Premium Sandals", category: "Footwear", price: 115, image: "/khusa.jpg" },
-  
-  // Carpets (20 items)
   { id: 39, title: "Persian Carpet", category: "Carpets", price: 250, image: "/carpet.png" },
   { id: 40, title: "Wool Rug", category: "Carpets", price: 180, image: "/carpet.png" },
   { id: 41, title: "Traditional Carpet", category: "Carpets", price: 220, image: "/carpet.png" },
@@ -64,8 +57,6 @@ const products = [
   { id: 56, title: "Shag Rug", category: "Carpets", price: 165, image: "/carpet.png" },
   { id: 57, title: "Contemporary Rug", category: "Carpets", price: 155, image: "/carpet.png" },
   { id: 58, title: "Premium Carpet", category: "Carpets", price: 260, image: "/carpet.png" },
-  
-  // Wooden Products (14 items)
   { id: 59, title: "Wooden Bowl", category: "Wooden Product", price: 45, image: "/wooden.png" },
   { id: 60, title: "Carved Box", category: "Wooden Product", price: 65, image: "/wooden.png" },
   { id: 61, title: "Wood Frame", category: "Wooden Product", price: 35, image: "/wooden.png" },
@@ -80,8 +71,6 @@ const products = [
   { id: 70, title: "Artistic Stand", category: "Wooden Product", price: 60, image: "/wooden.png" },
   { id: 71, title: "Wooden Tray", category: "Wooden Product", price: 40, image: "/wooden.png" },
   { id: 72, title: "Premium Cabinet", category: "Wooden Product", price: 140, image: "/wooden.png" },
-  
-  // Jewelry (14 items)
   { id: 73, title: "Earrings", category: "Jewelry", price: 80, image: "/earrings.png" },
   { id: 74, title: "Silver Necklace", category: "Jewelry", price: 95, image: "/earrings.png" },
   { id: 75, title: "Bracelet Set", category: "Jewelry", price: 65, image: "/earrings.png" },
