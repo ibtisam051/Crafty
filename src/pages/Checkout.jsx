@@ -49,7 +49,6 @@ function Checkout() {
       <div className="checkout-left">
         <form onSubmit={handleSubmit}>
 
-          {/* ================= Step 1: Billing Info ================= */}
           <div className="checkout-card">
             <h3>Billing Info</h3>
             <p className="step-label">Step 1 of 3</p>
@@ -105,7 +104,6 @@ function Checkout() {
             </div>
           </div>
 
-          {/* ================= Step 2: Payment ================= */}
           <div className="checkout-card">
             <h3>Payment Method</h3>
             <p className="step-label">Step 2 of 3</p>
@@ -198,7 +196,6 @@ function Checkout() {
             </div>
           </div>
 
-          {/* ================= Step 3: Confirmation ================= */}
           <div className="checkout-card">
             <h3>Confirmation</h3>
             <p className="step-label">Step 3 of 3</p>
@@ -241,7 +238,6 @@ function Checkout() {
         </form>
       </div>
 
-      {/* Right Side - Order Summary */}
       <div className="checkout-right">
         <div className="order-summary">
           <h3>Order Summary</h3>

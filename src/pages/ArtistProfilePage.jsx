@@ -70,7 +70,6 @@ function ArtistProfilePage() {
         </div>
       </div>
 
-      {/* Reviews Section */}
       <div className="artist-reviews-container">
         <div className="artist-reviews-header">
           <span>Reviews</span>

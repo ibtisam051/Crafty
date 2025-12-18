@@ -61,7 +61,6 @@ function ArtistPage() {
         <div className="artist-grid">
           {displayedArtists.map((artist) => (
             <div key={artist.id} className="artist-card">
-              {/* Top: Name + Type + Like */}
               <div className="artist-card-top">
                 <div className="artist-name-type">
                   <p className="artist-name">{artist.name}</p>

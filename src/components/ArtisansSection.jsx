@@ -10,7 +10,7 @@ function ArtisansSection() {
       role: "Master Weaver",
       about:
         "With over 30 years of experience, Ahmad creates intricate pashmina shawls using traditional techniques passed down through five generations.",
-      image: "https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg" 
+      image: "/images/artist/artist.png"
     },
     {
       id: 2,
@@ -18,7 +18,7 @@ function ArtisansSection() {
       role: "Pottery Craftsman",
       about:
         "Hassan specializes in the ancient art of blue pottery, bringing modern aesthetics to centuries-old craft from Multan.",
-      image: "https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg" 
+      image: "/images/artist/artist.png"
     },
     {
       id: 3,
@@ -26,7 +26,7 @@ function ArtisansSection() {
       role: "Embroidery Artist",
       about:
         "Ayesha's detailed embroidery work transforms ordinary fabrics into wearable art, celebrating Pakistan's rich textile heritage.",
-      image: "https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg" 
+      image: "/images/artist/artist.png"
     }
   ];
 

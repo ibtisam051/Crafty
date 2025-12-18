@@ -8,7 +8,7 @@ const sampleReviews = [
     id: 1,
     name: "Omar",
     location: "Lahore",
-    avatar: "https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg",
+    avatar: "/images/artist/artist.png",
     date: "21 July 2025",
     rating: 5,
     text:
@@ -18,7 +18,7 @@ const sampleReviews = [
     id: 2,
     name: "Ayesha",
     location: "Karachi",
-    avatar: "https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg",
+    avatar: "/images/artist/artist.png",
     date: "20 July 2025",
     rating: 5,
     text:
@@ -28,7 +28,7 @@ const sampleReviews = [
     id: 3,
     name: "Ali",
     location: "Islamabad",
-    avatar: "https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg",
+    avatar: "/images/artist/artist.png",
     date: "18 July 2025",
     rating: 4,
     text:
@@ -38,7 +38,7 @@ const sampleReviews = [
     id: 4,
     name: "Fatima",
     location: "Rawalpindi",
-    avatar: "https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg",
+    avatar: "/images/artist/artist.png",
     date: "15 July 2025",
     rating: 5,
     text:
@@ -74,9 +74,9 @@ function ProductDetail() {
           <div className="thumbnail-row">
             {[
               product.image,
-              "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=300&fit=crop",
-              "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=300&fit=crop",
-              "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=400&h=300&fit=crop"
+              "/images/products/NoImage.png",
+              "/images/products/NoImage.png",
+              "/images/products/NoImage.png"
             ].map((src, idx) => (
               <img
                 key={idx}
