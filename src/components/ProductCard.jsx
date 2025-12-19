@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import '../styles/products.css';
 
 function ProductCard({ id, title, category, price, image, variant = "home" }) {
   const [liked, setLiked] = useState(false);

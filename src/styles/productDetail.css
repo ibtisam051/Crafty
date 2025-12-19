@@ -265,3 +265,112 @@
     width: 100%;
   }
 }
+
+/* Add these lines to your existing CSS */
+
+/* Responsive improvements (add to existing media query or create new ones) */
+@media (max-width: 1024px) {
+  .product-detail-container {
+    width: 95%;
+    margin: 20px auto;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-detail-container {
+    flex-direction: column;
+  }
+  
+  .product-detail-left, 
+  .product-detail-right {
+    min-height: auto;
+    width: 100%;
+  }
+  
+  .main-image {
+    height: 300px;
+  }
+  
+  .thumbnail-row {
+    justify-content: flex-start;
+    overflow-x: auto;
+    margin-top: 10px;
+  }
+  
+  .thumbnail-row img {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .product-title {
+    font-size: 24px;
+  }
+  
+  .product-price {
+    font-size: 28px;
+  }
+  
+  .price-button-row {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .buy-now-btn {
+    width: 100%;
+    max-width: none;
+  }
+  
+  .review-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-detail-container {
+    padding: 10px;
+  }
+  
+  .main-image {
+    height: 250px;
+  }
+  
+  .product-detail-right {
+    padding: 20px;
+  }
+  
+  .product-title {
+    font-size: 20px;
+  }
+  
+  .product-price {
+    font-size: 24px;
+  }
+  
+  .reviews-container {
+    padding: 20px;
+    margin: 20px auto;
+  }
+}
+
+/* Dark mode - just 13 lines! */
+@media (prefers-color-scheme: dark) {
+  .product-detail-right, .reviews-container { 
+    background: #1a1a1a; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+  .product-title, .product-price { color: #fff; }
+  .rating-row .review-count, .product-description, .category-row { color: #ccc; }
+  .product-description, .category-row, .price-button-row { border-color: #333; }
+  .category-row span { color: #60a5fa; }
+  .buy-now-btn { background: #2563eb; }
+  .buy-now-btn:hover { background: #1d4ed8; }
+  .review-count-badge { background: #1e3a8a; color: #93c5fd; }
+  .review-item { border-color: #333; }
+  .review-name { color: #fff; }
+  .review-text, .review-location, .review-date { color: #aaa; }
+  .show-more { color: #60a5fa; }
+}
