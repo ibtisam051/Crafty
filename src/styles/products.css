@@ -116,6 +116,49 @@ body {
   color: #201c56;
 }
 
+/* CART CONTROLS - ADDED */
+.cart-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.quantity-btn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: white;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.quantity-btn:hover {
+  background: #3b82f6;
+  color: white;
+}
+
+.quantity {
+  min-width: 30px;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+}
+
 .buy-btn {
   background: #3b82f6;
   color: white;
@@ -126,6 +169,7 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s ease;
+  white-space: nowrap;
 }
 
 .buy-btn:hover {
@@ -256,6 +300,13 @@ body {
   background: #2563eb;
 }
 
+/* RESPONSIVE DESIGN */
+@media (max-width: 1200px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 1024px) {
   .product-page-container {
     gap: 30px;
@@ -267,6 +318,22 @@ body {
 
   .sidebar {
     width: 220px;
+  }
+}
+
+@media (max-width: 900px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .cart-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  
+  .quantity-controls {
+    justify-content: center;
   }
 }
 
@@ -284,17 +351,6 @@ body {
 
   .product-list-container .products-grid {
     grid-template-columns: 1fr;
-  }
-}
-@media (max-width: 1200px) {
-  .products-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 900px) {
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -318,17 +374,131 @@ body {
   .product-image-container {
     height: 200px;
   }
-}
-@media (prefers-color-scheme: dark) {
-  body { background: #121212; color: #e0e0e0; }
-  .product-card, .sidebar { background: #1a1a1a; border-color: #333; }
-  .product-title, .product-price, .sidebar-title { color: #ffffff; }
-  .product-category, .filters-list label { color: #aaa; }
-  .product-card:hover { box-shadow: 0px 6px 20px rgba(0,0,0,0.3); }
-  .buy-btn, .load-more button { background: #2563eb; }
-  .buy-btn:hover, .load-more button:hover { background: #1d4ed8; }
-  .shop-fixed-sidebar { background: #121212; }
-  .product-card.shop { background: #2d2d2d; border-color: #444; }
-  .product-card-link { color: inherit; }
+  
+  .product-price-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+  
+  .cart-controls {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .quantity-controls {
+    flex: 1;
+    max-width: 120px;
+  }
+  
+  .buy-btn {
+    flex: 1;
+  }
 }
 
+/* DARK MODE */
+@media (prefers-color-scheme: dark) {
+  body { 
+    background: #121212; 
+    color: #e0e0e0; 
+  }
+  
+  .product-card, 
+  .sidebar { 
+    background: #1a1a1a; 
+    border-color: #333; 
+  }
+  
+  .product-title, 
+  .product-price, 
+  .sidebar-title { 
+    color: #ffffff; 
+  }
+  
+  .product-category, 
+  .filters-list label { 
+    color: #aaa; 
+  }
+  
+  .product-card:hover { 
+    box-shadow: 0px 6px 20px rgba(0,0,0,0.3); 
+  }
+  
+  .buy-btn, 
+  .load-more button { 
+    background: #2563eb; 
+  }
+  
+  .buy-btn:hover, 
+  .load-more button:hover { 
+    background: #1d4ed8; 
+  }
+  
+  .shop-fixed-sidebar { 
+    background: #121212; 
+  }
+  
+  .product-card.shop { 
+    background: #2d2d2d; 
+    border-color: #444; 
+  }
+  
+  .product-card-link { 
+    color: inherit; 
+  }
+  
+  /* Dark mode for cart controls */
+  .quantity-controls {
+    background: #2d2d2d;
+  }
+  
+  .quantity-btn {
+    background: #1a1a1a;
+    color: #e0e0e0;
+  }
+  
+  .quantity-btn:hover {
+    background: #3b82f6;
+    color: white;
+  }
+  
+  .quantity {
+    color: #e0e0e0;
+  }
+}
+
+/* For shop page - hide quantity controls by default, show only on hover/click */
+.product-card.shop .quantity-controls {
+  display: none;
+}
+
+.product-card.shop:hover .quantity-controls,
+.product-card.shop.active .quantity-controls {
+  display: flex;
+}
+
+/* Cart badge styles (add to navbar) */
+.cart-nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ff4d6d;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid white;
+}

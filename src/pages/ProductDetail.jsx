@@ -11,8 +11,7 @@ const sampleReviews = [
     avatar: "/images/artist/artist.png",
     date: "21 July 2025",
     rating: 5,
-    text:
-      "I was looking for something traditional yet sharp, and these khussas were exactly it. The quality is fantastic and the fit was true to size. The gold details are what really make them stand out. Will be buying in another color soon!",
+    text: "I was looking for something traditional yet sharp, and these khussas were exactly it. The quality is fantastic and the fit was true to size. The gold details are what really make them stand out. Will be buying in another color soon!",
   },
   {
     id: 2,
@@ -21,8 +20,7 @@ const sampleReviews = [
     avatar: "/images/artist/artist.png",
     date: "20 July 2025",
     rating: 5,
-    text:
-      "The craftsmanship is even more beautiful in person. The golden thread against the black leather is so royal. I got so many compliments at my friend's wedding! They were surprisingly comfortable to wear all night. Definitely worth every rupee.",
+    text: "The craftsmanship is even more beautiful in person. The golden thread against the black leather is so royal. I got so many compliments at my friend's wedding! They were surprisingly comfortable to wear all night. Definitely worth every rupee.",
   },
   {
     id: 3,
@@ -31,8 +29,7 @@ const sampleReviews = [
     avatar: "/images/artist/artist.png",
     date: "18 July 2025",
     rating: 4,
-    text:
-      "Beautiful craftsmanship and authentic design. The only reason I'm giving 4 stars is because they were slightly tight at first, but they stretched to fit perfectly after a day of wear.",
+    text: "Beautiful craftsmanship and authentic design. The only reason I'm giving 4 stars is because they were slightly tight at first, but they stretched to fit perfectly after a day of wear.",
   },
   {
     id: 4,
@@ -41,8 +38,7 @@ const sampleReviews = [
     avatar: "/images/artist/artist.png",
     date: "15 July 2025",
     rating: 5,
-    text:
-      "Absolutely stunning! The golden embroidery is even more detailed in person. Received many compliments at a traditional event. Will definitely order more colors.",
+    text: "Absolutely stunning! The golden embroidery is even more detailed in person. Received many compliments at a traditional event. Will definitely order more colors.",
   },
 ];
 
@@ -52,9 +48,31 @@ function ProductDetail() {
   const product = products.find((p) => p.id === Number(id));
   const [selectedImage, setSelectedImage] = useState(product ? product.image : "");
   const [showAllReviews, setShowAllReviews] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isInCart, setIsInCart] = useState(false);
 
   const handleBuyNow = () => {
-    navigate("/checkout", { state: { product } });
+    navigate("/checkout", { state: { product, quantity } });
+  };
+
+  const handleAddToCart = () => {
+    console.log("Added to cart:", { product, quantity });
+    setIsInCart(true);
+    
+    alert(`Added ${quantity} ${product.title}(s) to cart!`);
+  };
+
+  const handleQuantityChange = (increase = true) => {
+    if (increase) {
+      setQuantity(prev => prev + 1);
+    } else {
+      setQuantity(prev => prev > 1 ? prev - 1 : 1);
+    }
+  };
+
+  const handleLikeClick = () => {
+    setIsLiked(!isLiked);
   };
 
   const displayedReviews = showAllReviews ? sampleReviews : sampleReviews.slice(0, 2);
@@ -90,7 +108,7 @@ function ProductDetail() {
         </div>
 
         <div className="product-detail-right">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "20px" }}>
+          <div className="product-header-row">
             <div>
               <h2 className="product-title">{product.title}</h2>
               <div className="rating-row">
@@ -99,18 +117,13 @@ function ProductDetail() {
               </div>
             </div>
 
-            <div style={{ 
-              color: "#ff4d6d", 
-              fontSize: "28px", 
-              cursor: "pointer", 
-              padding: "8px",
-              transition: "transform 0.2s"
-            }} 
-            onMouseEnter={(e) => e.target.style.transform = "scale(1.1)"}
-            onMouseLeave={(e) => e.target.style.transform = "scale(1)"}
+            <button 
+              className={`like-btn ${isLiked ? 'liked' : ''}`}
+              onClick={handleLikeClick}
+              aria-label={isLiked ? "Remove from favorites" : "Add to favorites"}
             >
-              ❤
-            </div>
+              {isLiked ? "❤️" : "🤍"}
+            </button>
           </div>
 
           <p className="product-description">
@@ -121,8 +134,39 @@ function ProductDetail() {
             Category: <span>{product.category}</span>
           </div>
 
-          <div className="price-button-row">
-            <div className="product-price">${product.price}.00</div>
+          {/* Quantity Controls */}
+          <div className="quantity-section">
+            <div className="quantity-label">Quantity:</div>
+            <div className="quantity-controls">
+              <button 
+                className="quantity-btn" 
+                onClick={() => handleQuantityChange(false)}
+                aria-label="Decrease quantity"
+              >
+                −
+              </button>
+              <span className="quantity-value">{quantity}</span>
+              <button 
+                className="quantity-btn" 
+                onClick={() => handleQuantityChange(true)}
+                aria-label="Increase quantity"
+              >
+                +
+              </button>
+            </div>
+            <div className="total-price">
+              Total: <span>${(product.price * quantity).toFixed(2)}</span>
+            </div>
+          </div>
+
+          {/* Cart Action Buttons */}
+          <div className="cart-action-buttons">
+            <button 
+              className={`add-to-cart-btn ${isInCart ? 'in-cart' : ''}`}
+              onClick={handleAddToCart}
+            >
+              {isInCart ? '✓ Added to Cart' : 'Add to Cart'}
+            </button>
             <button className="buy-now-btn" onClick={handleBuyNow}>
               Buy Now
             </button>
@@ -133,20 +177,20 @@ function ProductDetail() {
       <div className="reviews-container">
         <div className="review-header">
           <span>Reviews</span>
-          <div className="review-count-badge">15</div>
+          <div className="review-count-badge">{sampleReviews.length}</div>
         </div>
 
         {displayedReviews.map((review) => (
           <div key={review.id} className="review-item">
             <img src={review.avatar} alt={review.name} />
             <div className="review-content">
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "10px" }}>
+              <div className="review-header-info">
                 <div>
                   <div className="review-name">{review.name}</div>
                   <div className="review-location">{review.location}</div>
                 </div>
-                <div style={{ textAlign: "right" }}>
-                  <div style={{ color: "#fbbf24", fontSize: "16px", marginBottom: "5px" }}>
+                <div className="review-rating-date">
+                  <div className="review-stars">
                     {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
                   </div>
                   <div className="review-date">{review.date}</div>
@@ -163,9 +207,8 @@ function ProductDetail() {
           onClick={() => setShowAllReviews(!showAllReviews)}
         >
           <span className="show-text">
-  {showAllReviews ? "Show Less" : "Show All"}
-</span>
-
+            {showAllReviews ? "Show Less" : `Show All (${sampleReviews.length})`}
+          </span>
         </div>
       </div>
     </>

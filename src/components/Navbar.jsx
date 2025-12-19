@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext"; 
 import '../styles/navbar.css';
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { cartCount } = useCart(); 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -39,14 +41,15 @@ function Navbar() {
           aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={isMenuOpen}
         >
-          <span></span>
-          <span></span>
-          <span></span>
         </button>
         <div className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
           <Link to="/shop" onClick={handleLinkClick}>Shop</Link>
           <Link to="/artist" onClick={handleLinkClick}>Artist</Link>
-          <Link to="/about" onClick={handleLinkClick}>About</Link>
+          <Link to="/about" onClick={handleLinkClick}>About</Link>          
+          <Link to="/cart" className="cart-nav-link" onClick={handleLinkClick}>
+            🛒
+            {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+          </Link>
         </div>
       </nav>
     </>

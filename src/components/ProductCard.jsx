@@ -4,10 +4,29 @@ import '../styles/products.css';
 
 function ProductCard({ id, title, category, price, image, variant = "home" }) {
   const [liked, setLiked] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   const handleLikeClick = (e) => {
     e.preventDefault();
     setLiked(!liked);
+  };
+
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    e.stopPropagation(); // Prevent navigation to product detail
+    // Add cart logic here
+    console.log("Added to cart:", { id, title, quantity });
+    // You would typically dispatch to a cart context or state manager
+  };
+
+  const handleQuantityChange = (e, increase = true) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (increase) {
+      setQuantity(prev => prev + 1);
+    } else {
+      setQuantity(prev => prev > 1 ? prev - 1 : 1);
+    }
   };
 
   return (
@@ -34,7 +53,31 @@ function ProductCard({ id, title, category, price, image, variant = "home" }) {
 
         <div className="product-price-section">
           <span className="product-price">${price}.00</span>
-          <button className="buy-btn">Buy Now</button>
+          <div className="cart-controls">
+            {variant === "shop" && (
+              <div className="quantity-controls">
+                <button 
+                  className="quantity-btn" 
+                  onClick={(e) => handleQuantityChange(e, false)}
+                >
+                  −
+                </button>
+                <span className="quantity">{quantity}</span>
+                <button 
+                  className="quantity-btn" 
+                  onClick={(e) => handleQuantityChange(e, true)}
+                >
+                  +
+                </button>
+              </div>
+            )}
+            <button 
+              className="buy-btn"
+              onClick={handleAddToCart}
+            >
+              Add to Cart
+            </button>
+          </div>
         </div>
       </div>
     </Link>
