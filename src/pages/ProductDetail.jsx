@@ -159,7 +159,6 @@ function ProductDetail() {
             </div>
           </div>
 
-          {/* Cart Action Buttons */}
           <div className="cart-action-buttons">
             <button 
               className={`add-to-cart-btn ${isInCart ? 'in-cart' : ''}`}

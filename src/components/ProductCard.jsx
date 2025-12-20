@@ -13,10 +13,8 @@ function ProductCard({ id, title, category, price, image, variant = "home" }) {
 
   const handleAddToCart = (e) => {
     e.preventDefault();
-    e.stopPropagation(); // Prevent navigation to product detail
-    // Add cart logic here
+    e.stopPropagation(); 
     console.log("Added to cart:", { id, title, quantity });
-    // You would typically dispatch to a cart context or state manager
   };
 
   const handleQuantityChange = (e, increase = true) => {

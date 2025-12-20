@@ -11,6 +11,7 @@ import Checkout from "./pages/Checkout";
 import ArtistPage from "./pages/ArtistPage";
 import ArtistProfilePage from "./pages/ArtistProfilePage";
 import './styles/global.css';
+import About from "./pages/About";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/artist" element={<ArtistPage />} />
           <Route path="/artist/:id" element={<ArtistProfilePage />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/about" element={<About/>}/>
         </Routes>
         <Footer />
       </BrowserRouter>
