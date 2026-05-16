@@ -6,6 +6,7 @@ import '../styles/navbar.css';
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cartCount } = useCart(); 
+  const token = localStorage.getItem('token');
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -14,6 +15,10 @@ function Navbar() {
   };
   const handleLinkClick = () => {
     closeMenu();
+  };
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    window.location.reload();
   };
   return (
     <>
@@ -50,6 +55,11 @@ function Navbar() {
             🛒
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </Link>
+          {token ? (
+            <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer' }}>Logout</button>
+          ) : (
+            <Link to="/login" onClick={handleLinkClick}>Login</Link>
+          )}
         </div>
       </nav>
     </>

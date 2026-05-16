@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import products from "../components/productsData";
+import { getProduct } from "../services/api";
+import { useCart } from "../context/CartContext";
 import '../styles/productDetail.css';
 
 const sampleReviews = [
@@ -43,10 +44,27 @@ const sampleReviews = [
 ];
 
 function ProductDetail() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
-  const product = products.find((p) => p.id === Number(id));
-  const [selectedImage, setSelectedImage] = useState(product ? product.image : "");
+  const { addToCart } = useCart();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState("");
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await getProduct(slug);
+        setProduct(response.data);
+        setSelectedImage(response.data.images?.[0]?.image || "/images/products/shawl.png");
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProduct();
+  }, [slug]);
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [isLiked, setIsLiked] = useState(false);
@@ -57,10 +75,9 @@ function ProductDetail() {
   };
 
   const handleAddToCart = () => {
-    console.log("Added to cart:", { product, quantity });
+    addToCart(product, quantity);
     setIsInCart(true);
-    
-    alert(`Added ${quantity} ${product.title}(s) to cart!`);
+    alert(`Added ${quantity} ${product.name}(s) to cart!`);
   };
 
   const handleQuantityChange = (increase = true) => {
@@ -77,6 +94,7 @@ function ProductDetail() {
 
   const displayedReviews = showAllReviews ? sampleReviews : sampleReviews.slice(0, 2);
 
+  if (loading) return <div>Loading product...</div>;
   if (!product) return <h2>Product not found</h2>;
 
   return (
@@ -85,23 +103,18 @@ function ProductDetail() {
         <div className="product-detail-left">
           <img 
             src={selectedImage} 
-            alt={product.title} 
+            alt={product.name} 
             className="main-image" 
           />
 
           <div className="thumbnail-row">
-            {[
-              product.image,
-              "/images/products/NoImage.png",
-              "/images/products/NoImage.png",
-              "/images/products/NoImage.png"
-            ].map((src, idx) => (
+            {(product.images || []).map((img, idx) => (
               <img
                 key={idx}
-                src={src}
-                alt={`${product.title} view ${idx + 1}`}
-                onClick={() => setSelectedImage(src)}
-                className={selectedImage === src ? "active" : ""}
+                src={img.image}
+                alt={`${product.name} view ${idx + 1}`}
+                onClick={() => setSelectedImage(img.image)}
+                className={selectedImage === img.image ? "active" : ""}
               />
             ))}
           </div>
@@ -110,7 +123,7 @@ function ProductDetail() {
         <div className="product-detail-right">
           <div className="product-header-row">
             <div>
-              <h2 className="product-title">{product.title}</h2>
+              <h2 className="product-title">{product.name}</h2>
               <div className="rating-row">
                 <span className="stars">★★★★★</span>
                 <span className="review-count">440+ Reviewer</span>
@@ -127,11 +140,11 @@ function ProductDetail() {
           </div>
 
           <p className="product-description">
-            A classic black {product.title.split(' ')[0]}, elegantly detailed with golden embroidery. Handcrafted for a perfect blend of traditional style and modern sophistication.
+            A classic black {product.name.split(' ')[0]}, elegantly detailed with golden embroidery. Handcrafted for a perfect blend of traditional style and modern sophistication.
           </p>
 
           <div className="category-row">
-            Category: <span>{product.category}</span>
+            Category: <span>{typeof product.category === 'object' ? product.category.name : product.category}</span>
           </div>
 
           {/* Quantity Controls */}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Shop Products{% endblock %}
+
+{% block content %}
+    <h1 class="page-heading">Shop All Products</h1>
+    <div class="card">
+        <p>Filter by category or artisan using URL query parameters like <code>?category=slug</code> or <code>?artisan=uuid</code>.</p>
+    </div>
+    <div class="grid grid-3">
+        {% for product in products %}
+            <div class="card">
+                {% if product.images.first %}
+                    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" />
+                {% else %}
+                    <img src="/images/products/default.png" alt="{{ product.name }}" />
+                {% endif %}
+                <h3>{{ product.name }}</h3>
+                <p class="product-meta">{{ product.category.name }} • {{ product.artisan.business_name }}</p>
+                <p>${{ product.price }}</p>
+                <a class="button" href="{% url 'product-detail-page' slug=product.slug %}">View Details</a>
+            </div>
+        {% empty %}
+            <p>No products match your search.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

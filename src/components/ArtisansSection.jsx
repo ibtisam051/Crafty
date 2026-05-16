@@ -1,49 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ArtisanCard from "./ArtisanCard";
+import { getArtisans } from "../services/api";
 import '../styles/artisans.css';
 
 function ArtisansSection() {
-  const artisans = [
-    {
-      id: 1,
-      name: "Ali Ahmad",
-      role: "Master Weaver",
-      about:
-        "With over 30 years of experience, Ahmad creates intricate pashmina shawls using traditional techniques passed down through five generations.",
-      image: "/images/artist/artist.png"
-    },
-    {
-      id: 2,
-      name: "Rao Hassan",
-      role: "Pottery Craftsman",
-      about:
-        "Hassan specializes in the ancient art of blue pottery, bringing modern aesthetics to centuries-old craft from Multan.",
-      image: "/images/artist/artist.png"
-    },
-    {
-      id: 3,
-      name: "Ayesha Khan",
-      role: "Embroidery Artist",
-      about:
-        "Ayesha's detailed embroidery work transforms ordinary fabrics into wearable art, celebrating Pakistan's rich textile heritage.",
-      image: "/images/artist/artist.png"
-    }
-  ];
+  const [artisans, setArtisans] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArtisans = async () => {
+      try {
+        const response = await getArtisans();
+        setArtisans(response.data.results || response.data);
+      } catch (error) {
+        console.error('Error fetching artisans:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArtisans();
+  }, []);
+
+  if (loading) return <div>Loading artisans...</div>;
 
   return (
-    <div className="artisans-section">
-      <h2>Meet the Artisans</h2>
-      <p className="subtext">
-        The skilled hands and passionate hearts behind each handcrafted piece
-      </p>
-
-      <div className="artisans-grid">
-        {artisans.map((a, i) => (
-          <ArtisanCard key={i} id={a.id} {...a} />
-        ))}
+    <section className="artisans-section">
+      <div className="container">
+        <h2 className="section-title">Meet Our Artisans</h2>
+        <div className="artisans-grid">
+          {artisans.slice(0, 3).map((artisan) => (
+            <ArtisanCard key={artisan.id} artisan={artisan} />
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 
 export default ArtisansSection;
+  

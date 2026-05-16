@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Crafty Home{% endblock %}
+
+{% block content %}
+    <h1 class="page-heading">Welcome to Crafty</h1>
+    <div class="card">
+        <h2>Featured products</h2>
+        <div class="grid grid-3">
+            {% for product in products %}
+                <div class="card">
+                    {% if product.images.first %}
+                        <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" />
+                    {% else %}
+                        <img src="/images/products/default.png" alt="{{ product.name }}" />
+                    {% endif %}
+                    <h3>{{ product.name }}</h3>
+                    <p class="product-meta">{{ product.category.name }} • {{ product.artisan.business_name }}</p>
+                    <p>${{ product.price }}</p>
+                    <a class="button" href="{% url 'product-detail-page' slug=product.slug %}">View Product</a>
+                </div>
+            {% empty %}
+                <p>No products available yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Popular categories</h2>
+        <div class="grid grid-3">
+            {% for category in categories %}
+                <div class="card">
+                    <h3>{{ category.name }}</h3>
+                    {% if category.image %}
+                        <img src="{{ category.image.url }}" alt="{{ category.name }}" />
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p>No categories found.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Top artisans</h2>
+        <div class="grid grid-3">
+            {% for artisan in artisans %}
+                <div class="card">
+                    <h3>{{ artisan.business_name }}</h3>
+                    <p class="product-meta">{{ artisan.craft_specialty }} • {{ artisan.experience_years }} years</p>
+                    <a class="button" href="{% url 'artisan-detail-page' artisan_id=artisan.artisan.id %}">View Profile</a>
+                </div>
+            {% empty %}
+                <p>No artisans are verified yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

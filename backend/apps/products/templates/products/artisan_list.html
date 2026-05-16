@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Artisan Profiles{% endblock %}
+
+{% block content %}
+    <h1 class="page-heading">Verified Artisans</h1>
+    <div class="grid grid-3">
+        {% for artisan in artisans %}
+            <div class="card">
+                <h3>{{ artisan.business_name }}</h3>
+                <p class="product-meta">{{ artisan.craft_specialty }}</p>
+                <p class="product-meta">{{ artisan.experience_years }} years of experience</p>
+                <p class="product-meta">Average rating: {{ artisan.average_rating }}</p>
+                <a class="button" href="{% url 'artisan-detail-page' artisan_id=artisan.artisan.id %}">View Profile</a>
+            </div>
+        {% empty %}
+            <p>No artisans are available.</p>
+        {% endfor %}
+    </div>

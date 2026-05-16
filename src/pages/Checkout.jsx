@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import { createOrder } from "../services/api";
 import '../styles/checkout.css';
 
 function Checkout() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { cartItems, cartTotal, clearCart } = useCart();
   const product = location.state?.product || null;
+  const quantity = location.state?.quantity || 1;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -30,17 +34,25 @@ function Checkout() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.agreeTerms) {
       alert("Please agree to terms and conditions");
       return;
     }
-    alert("Order placed successfully!");
-    navigate("/");
+    try {
+      const shippingAddress = `${formData.address}, ${formData.town}`;
+      await createOrder({ shipping_address: shippingAddress });
+      clearCart();
+      alert("Order placed successfully!");
+      navigate("/");
+    } catch (error) {
+      console.error('Error placing order:', error);
+      alert("Error placing order. Please try again.");
+    }
   };
 
-  const subtotal = product?.price || 0;
+  const subtotal = product ? product.price * quantity : cartTotal;
   const tax = (subtotal * 0.1).toFixed(2);
   const total = (parseFloat(subtotal) + parseFloat(tax)).toFixed(2);
 
@@ -242,17 +254,27 @@ function Checkout() {
         <div className="order-summary">
           <h3>Order Summary</h3>
 
-          {product && (
+          {product ? (
             <div className="order-item">
-              <img src={product.image} alt={product.title} />
+              <img src={product.images?.[0]?.image} alt={product.name} />
               <div className="item-details">
-                <h4>{product.title}</h4>
+                <h4>{product.name}</h4>
                 <div className="item-rating">
                   <span style={{ color: "#fbbf24" }}>★★★★★</span>
                   <span style={{ fontSize: "12px", color: "#777", marginLeft: "4px" }}>440 Reviewers</span>
                 </div>
               </div>
             </div>
+          ) : (
+            cartItems.map((item) => (
+              <div key={item.id} className="order-item">
+                <img src={item.product.images?.[0]?.image} alt={item.product.name} />
+                <div className="item-details">
+                  <h4>{item.product.name}</h4>
+                  <p>Qty: {item.quantity}</p>
+                </div>
+              </div>
+            ))
           )}
 
           <div className="price-breakdown">

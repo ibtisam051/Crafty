@@ -21,24 +21,31 @@ function Cart() {
       <h1>Shopping Cart</h1>
       
       <div className="cart-items">
-        {cartItems.map((item) => (
-          <div key={item.id} className="cart-item">
-            <img src={item.image} alt={item.title} />
-            <div className="cart-item-info">
-              <h3>{item.title}</h3>
-              <p>{item.category}</p>
-              <div className="cart-item-controls">
-                <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
-                <span>{item.quantity}</span>
-                <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+        {cartItems.map((item) => {
+          const product = item.product || item;
+          const categoryName = product.category?.name || product.category || 'Unknown';
+          const imageUrl = product.images?.[0]?.image || '/images/products/default.png';
+          const price = Number(product.price || 0);
+
+          return (
+            <div key={item.id} className="cart-item">
+              <img src={imageUrl} alt={product.name} />
+              <div className="cart-item-info">
+                <h3>{product.name}</h3>
+                <p>{categoryName}</p>
+                <div className="cart-item-controls">
+                  <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
+                  <span>{item.quantity}</span>
+                  <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+                </div>
+              </div>
+              <div className="cart-item-price">
+                <div>${(price * item.quantity).toFixed(2)}</div>
+                <button onClick={() => removeFromCart(item.id)}>Remove</button>
               </div>
             </div>
-            <div className="cart-item-price">
-              <div>${(item.price * item.quantity).toFixed(2)}</div>
-              <button onClick={() => removeFromCart(item.id)}>Remove</button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="cart-summary">

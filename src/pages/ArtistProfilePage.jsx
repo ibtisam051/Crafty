@@ -1,18 +1,31 @@
-import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import artists, { artistReviews } from "../components/artistsData";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getArtisan } from "../services/api";
 import '../styles/artistProfile.css';
 
 function ArtistProfilePage() {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const artist = artists.find((a) => a.id === Number(id));
-  const [liked, setLiked] = useState(artist?.liked || false);
-  const reviews = artistReviews[id] || [];
+  const [artist, setArtist] = useState(null);
+  const [liked, setLiked] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  if (!artist) {
-    return <h2>Artist not found</h2>;
-  }
+  useEffect(() => {
+    const fetchArtist = async () => {
+      try {
+        const response = await getArtisan(id);
+        setArtist(response.data);
+      } catch (error) {
+        console.error('Error fetching artist profile:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArtist();
+  }, [id]);
+
+  if (loading) return <div>Loading artist profile...</div>;
+  if (!artist) return <h2>Artist not found</h2>;
 
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);
@@ -37,17 +50,17 @@ function ArtistProfilePage() {
     <>
       <div className="artist-profile-container">
         <div className="artist-profile-left">
-          <img src={artist.image} alt={artist.name} className="artist-profile-image" />
+          <img src={artist.image || "/images/artist/artist.png"} alt={artist.business_name} className="artist-profile-image" />
         </div>
 
         <div className="artist-profile-right">
           <div className="artist-profile-header">
             <div>
-              <h1 className="artist-profile-name">{artist.name}</h1>
+              <h1 className="artist-profile-name">{artist.business_name}</h1>
               <div className="artist-profile-rating">
-                {renderStars(artist.rating)}
+                {renderStars(artist.average_rating || 0)}
                 <span style={{ marginLeft: "6px", color: "#777", fontSize: "14px" }}>
-                  · {artist.reviewCount}+ Reviewer
+                  · {artist.total_sales || 0} sales
                 </span>
               </div>
             </div>
@@ -59,69 +72,39 @@ function ArtistProfilePage() {
             </button>
           </div>
 
-          <p className="artist-profile-bio">{artist.bio}</p>
+          <p className="artist-profile-bio">{artist.bio || `Crafts exceptional pieces in ${artist.craft_specialty}.`}</p>
 
           <div className="artist-profile-meta">
             <div className="meta-item">
-              <span className="meta-label">Category</span>
-              <span className="meta-value">{artist.type}</span>
+              <span className="meta-label">Specialty</span>
+              <span className="meta-value">{artist.craft_specialty}</span>
+            </div>
+            <div className="meta-item">
+              <span className="meta-label">Experience</span>
+              <span className="meta-value">{artist.experience_years || 0} years</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="artist-reviews-container">
-        <div className="artist-reviews-header">
-          <span>Reviews</span>
+      <div className="artist-products-container">
+        <div className="artist-products-header">
+          <span>Featured Products</span>
           <div style={{ marginLeft: 8, background: "#eef2ff", color: "#3b82f6", padding: "4px 8px", borderRadius: 6 }}>
-            {reviews.length || 13}
+            {artist.products?.length || 0}
           </div>
         </div>
-
-        {reviews.length > 0 ? (
-          <>
-            {reviews.map((review) => (
-              <div key={review.id} className="artist-review-item">
-                <img src={review.avatar} alt={review.name} />
-                <div className="artist-review-content">
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div>
-                      <div className="artist-review-name">{review.name}</div>
-                      <div className="artist-review-location">{review.location}</div>
-                    </div>
-                    <div style={{ textAlign: "right" }}>
-                      <div style={{ color: "#fbbf24" }}>
-                        {Array(review.rating)
-                          .fill(0)
-                          .map((_, i) => (
-                            <span key={i}>★</span>
-                          ))}
-                        {Array(5 - review.rating)
-                          .fill(0)
-                          .map((_, i) => (
-                            <span key={`empty-${i}`} style={{ color: "#ddd" }}>
-                              ★
-                            </span>
-                          ))}
-                      </div>
-                      <div style={{ color: "#999", fontSize: 12 }}>{review.date}</div>
-                    </div>
-                  </div>
-
-                  <div className="artist-review-text" style={{ marginTop: 8 }}>
-                    {review.text}
-                  </div>
-                </div>
+        <div className="artist-products-grid">
+          {artist.products?.map((product) => (
+            <div key={product.id} className="artist-product-card">
+              <img src={product.images?.[0]?.image || "/images/products/default.png"} alt={product.name} />
+              <div className="artist-product-info">
+                <h4>{product.name}</h4>
+                <p>${product.price}.00</p>
               </div>
-            ))}
-
-            <div className="artist-show-more">Show All ▾</div>
-          </>
-        ) : (
-          <p style={{ textAlign: "center", color: "#999", marginTop: "20px" }}>
-            No reviews yet
-          </p>
-        )}
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

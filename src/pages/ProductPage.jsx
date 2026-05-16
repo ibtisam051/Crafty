@@ -1,35 +1,53 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import ProductsRow from "../components/ProductsRow";
-import products from "../components/productsData";
+import { getProducts, getCategories } from "../services/api";
 
 function ProductPage() {
-  const [selectedFilters, setSelectedFilters] = useState({
-    Textiles: true,
-    Pottery: true,
-    Footwear: true,
-  });
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedFilters, setSelectedFilters] = useState({});
   const [maxPrice, setMaxPrice] = useState(300);
-  const [displayCount, setDisplayCount] = useState(6);
+  const [displayCount, setDisplayCount] = useState(1000);  // show all by default
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [productsRes, categoriesRes] = await Promise.all([getProducts(), getCategories()]);
+        setProducts(productsRes.data.results || productsRes.data);
+        const cats = categoriesRes.data.results || categoriesRes.data;
+        setCategories(cats);
+        const filters = {};
+        cats.forEach(cat => filters[cat.name] = true);
+        setSelectedFilters(filters);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const categoryCounts = useMemo(() => {
     const counts = {};
     products.forEach((product) => {
-      counts[product.category] = (counts[product.category] || 0) + 1;
+      counts[product.category.name] = (counts[product.category.name] || 0) + 1;
     });
     return counts;
-  }, []);
+  }, [products]);
 
   const allCategories = useMemo(() => {
-    return [...new Set(products.map((p) => p.category))];
-  }, []);
+    return categories.map(cat => cat.name);
+  }, [categories]);
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
-      const categoryMatch = selectedFilters[product.category];
+      const categoryMatch = selectedFilters[product.category.name];
       const priceMatch = product.price <= maxPrice;
       return categoryMatch && priceMatch;
     });
-  }, [selectedFilters, maxPrice]);
+  }, [selectedFilters, maxPrice, products]);
 
   const displayedProducts = filteredProducts.slice(0, displayCount);
 
@@ -47,6 +65,8 @@ function ProductPage() {
   const handleShowMore = () => {
     setDisplayCount((prev) => prev + 6);
   };
+
+  if (loading) return <div>Loading products...</div>;
 
   return (
     <div className="shop-fixed-sidebar">

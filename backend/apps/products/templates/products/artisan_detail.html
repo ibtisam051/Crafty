@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ artisan_profile.business_name }}{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h1>{{ artisan_profile.business_name }}</h1>
+        <p class="product-meta">{{ artisan_profile.craft_specialty }}</p>
+        <p class="product-meta">{{ artisan_profile.experience_years }} years of experience</p>
+        <p class="product-meta">Average rating: {{ artisan_profile.average_rating }}</p>
+        <p class="product-meta">Total sales: {{ artisan_profile.total_sales }}</p>
+        <p>{{ artisan_profile.artisan.bio }}</p>
+        <p class="product-meta">Country: {{ artisan_profile.artisan.country }}</p>
+    </div>
+
+    <div class="card">
+        <h2>Products from {{ artisan_profile.business_name }}</h2>
+        <div class="grid grid-3">
+            {% for product in products %}
+                <div class="card">
+                    {% if product.images.first %}
+                        <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" />
+                    {% else %}
+                        <img src="/images/products/default.png" alt="{{ product.name }}" />
+                    {% endif %}
+                    <h3>{{ product.name }}</h3>
+                    <p class="product-meta">${{ product.price }}</p>
+                    <a class="button" href="{% url 'product-detail-page' slug=product.slug %}">View Product</a>
+                </div>
+            {% empty %}
+                <p>No products available for this artisan yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

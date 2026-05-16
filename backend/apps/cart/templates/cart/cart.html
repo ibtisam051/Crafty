@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Cart{% endblock %}
+
+{% block content %}
+    <h1 class="page-heading">Shopping Cart</h1>
+    {% if cart_items %}
+        <div class="card">
+            <div class="grid grid-3">
+                {% for item in cart_items %}
+                    <div class="card">
+                        <h3>{{ item.product.name }}</h3>
+                        {% if item.product.images.first %}
+                            <img src="{{ item.product.images.first.image.url }}" alt="{{ item.product.name }}" />
+                        {% endif %}
+                        <p class="product-meta">{{ item.product.category.name }}</p>
+                        <p>Quantity: {{ item.quantity }}</p>
+                        <p>Unit price: ${{ item.unit_price }}</p>
+                        <p>Subtotal: ${{ item.subtotal }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="card" style="text-align: right;">
+                <p>Total items: {{ cart_items|length }}</p>
+                <p>Total amount: ${{ cart_total }}</p>
+                <a class="button" href="{% url 'product-list-page' %}">Continue Shopping</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="card">
+            <p>Your cart is empty.</p>
+            <a class="button" href="{% url 'product-list-page' %}">Browse Products</a>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h1>{{ product.name }}</h1>
+        <p class="product-meta">{{ product.category.name }} • {{ product.artisan.business_name }}</p>
+        <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="card">
+                {% if images %}
+                    <img src="{{ images.0.image.url }}" alt="{{ product.name }}" />
+                {% endif %}
+                <div class="grid" style="grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; margin-top: 0.75rem;">
+                    {% for image in images %}
+                        <img src="{{ image.image.url }}" alt="{{ product.name }}" />
+                    {% endfor %}
+                </div>
+            </div>
+            <div>
+                <p>{{ product.description }}</p>
+                <p class="product-meta">Price: ${{ product.price }}</p>
+                <p class="product-meta">Available: {{ product.stock_quantity }}</p>
+                <p class="product-meta">Materials: {{ product.materials }}</p>
+                <p class="product-meta">Dimensions: {{ product.dimensions }}</p>
+                <p class="product-meta">Production time: {{ product.production_time_days }} days</p>
+                <a class="button" href="{% url 'cart-page' %}">Go to Cart</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
