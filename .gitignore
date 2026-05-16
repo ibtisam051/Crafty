@@ -5,6 +5,11 @@
 /.pnp
 .pnp.js
 
+# local Python virtual environments
+/.venv
+/.venv_old
+/venv310
+
 # testing
 /coverage
 
