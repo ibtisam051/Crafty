@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext"; 
 import '../styles/navbar.css';
+import { useAuth } from '../context/AuthContext';
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cartCount } = useCart(); 
-  const token = localStorage.getItem('token');
+  const { isAuthenticated, user, logout } = useAuth();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -15,10 +16,6 @@ function Navbar() {
   };
   const handleLinkClick = () => {
     closeMenu();
-  };
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    window.location.reload();
   };
   return (
     <>
@@ -55,8 +52,11 @@ function Navbar() {
             🛒
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </Link>
-          {token ? (
-            <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer' }}>Logout</button>
+          {isAuthenticated ? (
+            <>
+              <span style={{ margin: '0 8px' }}>{user?.username || user?.email}</span>
+              <button onClick={() => logout()} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', textDecoration: 'underline', marginLeft: '10px', display: 'inline-block' }}>Logout</button>
+            </>
           ) : (
             <Link to="/login" onClick={handleLinkClick}>Login</Link>
           )}

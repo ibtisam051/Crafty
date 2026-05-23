@@ -16,9 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-# from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import TokenRefreshView
+from api.custom_token import EmailTokenObtainPairView
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from django.views.generic.base import RedirectView
 from apps.products.views import (
     home_view,
     product_list_view,
@@ -28,6 +33,17 @@ from apps.products.views import (
 )
 from apps.cart.views import cart_view
 
+# drf-yasg schema view
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Crafty API",
+        default_version='v1',
+        description="API documentation for Crafty",
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
 urlpatterns = [
     path('', home_view, name='home-page'),
     path('shop/', product_list_view, name='product-list-page'),
@@ -36,7 +52,14 @@ urlpatterns = [
     path('artisans/', artisan_list_view, name='artisan-list-page'),
     path('artisans/<uuid:artisan_id>/', artisan_detail_view, name='artisan-detail-page'),
     path('admin/', admin.site.urls),
+    # Redirect exact /api/ to API docs
+    path('api/', RedirectView.as_view(url='/api/docs/', permanent=False)),
     path('api/', include('api.urls')),
-    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # API documentation (Swagger / Redoc)
+    path('api/docs/swagger.json', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('api/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('api/token/', EmailTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

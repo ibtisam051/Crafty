@@ -19,16 +19,41 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(
   response => response,
-  error => {
+  async (error) => {
+    const originalRequest = error.config;
     if (error.response && error.response.status === 401) {
-      const url = error.config?.url || '';
-      const method = (error.config?.method || '').toLowerCase();
+      const url = originalRequest?.url || '';
+      const method = (originalRequest?.method || '').toLowerCase();
+
+      // Try to refresh token once
+      if (!originalRequest._retry) {
+        originalRequest._retry = true;
+        const refresh = localStorage.getItem('refreshToken');
+        if (refresh) {
+          try {
+            const resp = await axios.post(`${API_BASE_URL}/token/refresh/`, { refresh });
+            const newAccess = resp.data.access;
+            localStorage.setItem('token', newAccess);
+            api.defaults.headers.common['Authorization'] = `Bearer ${newAccess}`;
+            originalRequest.headers['Authorization'] = `Bearer ${newAccess}`;
+            return api(originalRequest);
+          } catch (refreshErr) {
+            // refresh failed, fall through to clearing tokens
+            localStorage.removeItem('token');
+            localStorage.removeItem('refreshToken');
+            return Promise.reject(error);
+          }
+        }
+      }
+
       // Allow anonymous GETs for cart/orders to return an empty set for UI
       if (method === 'get' && (url.includes('/cart') || url.includes('/orders'))) {
         return Promise.resolve({ data: { items: [] } });
       }
-      // For mutating cart/order requests (POST/PUT/DELETE) reject so frontend fallbacks run
-      return Promise.reject(error);
+
+      // clear tokens for other failures
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
     }
     return Promise.reject(error);
   }

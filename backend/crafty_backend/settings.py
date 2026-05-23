@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     # Third party apps
     'rest_framework',
     'corsheaders',
-    # 'drf_yasg',
+    'drf_yasg',
     
     # Local apps
     'apps.users',
@@ -109,51 +109,87 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = True
 
 # ============================================================================
-# SESSION CONFIGURATION
+# COOKIE & SESSION CONFIGURATION
 # ============================================================================
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Store sessions in database
-SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds
-SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
-SESSION_COOKIE_HTTPONLY = True  # Prevent JavaScript access to session cookie
-SESSION_COOKIE_SAMESITE = 'Lax'  # CSRF protection - Lax allows some cross-site requests
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Keep session alive even after browser closes
-SESSION_COOKIE_NAME = 'crafty_sessionid'  # Custom session cookie name
-
-# ============================================================================
-# COOKIE CONFIGURATION
-# ============================================================================
-CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
+# General cookie settings (override in production via env vars)
+CSRF_COOKIE_SECURE = os.getenv('CSRF_COOKIE_SECURE', 'False') == 'True'
 CSRF_COOKIE_HTTPONLY = True
-CSRF_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_NAME = 'crafty_csrftoken'
+CSRF_COOKIE_SAMESITE = os.getenv('CSRF_COOKIE_SAMESITE', 'Lax')
+CSRF_COOKIE_NAME = os.getenv('CSRF_COOKIE_NAME', 'crafty_csrftoken')
+
+# Session defaults (can be overridden by redis-backed config below)
+SESSION_COOKIE_AGE = int(os.getenv('SESSION_COOKIE_AGE', 1209600))  # 2 weeks
+SESSION_COOKIE_SECURE = os.getenv('SESSION_COOKIE_SECURE', 'False') == 'True'
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = os.getenv('SESSION_COOKIE_SAMESITE', 'Lax')
+SESSION_EXPIRE_AT_BROWSER_CLOSE = os.getenv('SESSION_EXPIRE_AT_BROWSER_CLOSE', 'False') == 'True'
+SESSION_COOKIE_NAME = os.getenv('SESSION_COOKIE_NAME', 'crafty_sessionid')
 
 # ============================================================================
-# CACHING CONFIGURATION
+# CACHING CONFIGURATION (Redis when available, otherwise local-memory)
 # ============================================================================
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',  # In-memory cache for development
-        'LOCATION': 'crafty-cache',
-        'TIMEOUT': 300,  # 5 minutes default cache timeout
-        'OPTIONS': {
-            'MAX_ENTRIES': 1000,
-        }
-    },
-    'session': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'crafty-session-cache',
-        'TIMEOUT': 3600,  # 1 hour for session cache
-    },
-    'products': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'crafty-products-cache',
-        'TIMEOUT': 1800,  # 30 minutes for product listings
+REDIS_URL = os.getenv('REDIS_URL')  # e.g. redis://redis:6379/1
+
+if REDIS_URL:
+    # Use django-redis for production-like caching/session store
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': REDIS_URL,
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            },
+            'TIMEOUT': int(os.getenv('CACHE_DEFAULT_TIMEOUT', 300)),
+        },
+        'session': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': REDIS_URL,
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            },
+            'TIMEOUT': int(os.getenv('CACHE_SESSION_TIMEOUT', 3600)),
+        },
+        'products': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': REDIS_URL,
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            },
+            'TIMEOUT': int(os.getenv('CACHE_PRODUCTS_TIMEOUT', 1800)),
+        },
     }
-}
+
+    # Use cache-backed sessions when Redis is available
+    SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+    SESSION_CACHE_ALIAS = 'session'
+else:
+    # Development fallback to local memory cache
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'crafty-cache',
+            'TIMEOUT': 300,
+            'OPTIONS': {'MAX_ENTRIES': 1000},
+        },
+        'session': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'crafty-session-cache',
+            'TIMEOUT': 3600,
+        },
+        'products': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'crafty-products-cache',
+            'TIMEOUT': 1800,
+        },
+    }
+
+    # Default sessions use DB-backed engine in dev to persist between restarts
+    SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+    SESSION_CACHE_ALIAS = 'default'
 
 # Cache product listings and API responses
 CACHE_MIDDLEWARE_ALIAS = 'default'
-CACHE_MIDDLEWARE_SECONDS = 600  # 10 minutes
+CACHE_MIDDLEWARE_SECONDS = int(os.getenv('CACHE_MIDDLEWARE_SECONDS', 600))  # 10 minutes
 
 # ============================================================================
 # JWT TOKEN CONFIGURATION (Enhanced)

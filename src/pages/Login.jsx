@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { login } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 function Login() {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -8,15 +9,19 @@ function Login() {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
+  const auth = useAuth();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await login(credentials);
-      localStorage.setItem('token', response.data.access);
+      // send email + password (backend expects email as USERNAME_FIELD)
+      const response = await login({ email: credentials.email, password: credentials.password });
+      // delegate storage to AuthContext so UI updates
+      auth.login({ access: response.data.access, refresh: response.data.refresh, user: response.data.user });
       alert('Logged in successfully!');
-      window.location.reload();
     } catch (error) {
-      alert('Login failed');
+      console.error('Login error', error?.response || error);
+      alert('Login failed: ' + (error?.response?.data?.detail || 'Invalid credentials'));
     }
   };
 

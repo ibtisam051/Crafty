@@ -303,10 +303,6 @@
   }
 }
 
-.nav-links > button {
-  display: none !important;
-}
-
 .nav-backdrop.active {
   cursor: pointer;
 }

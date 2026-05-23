@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext"; 
+import { AuthProvider } from "./context/AuthContext";
 import Cart from "./pages/Cart";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -16,10 +17,11 @@ import About from "./pages/About";
 
 function App() {
   return (
-    <CartProvider>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
+    <AuthProvider>
+      <CartProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<ProductPage />} />
           <Route path="/product/:slug" element={<ProductDetail />} />
@@ -29,10 +31,11 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About/>}/>
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-    </CartProvider>
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 
