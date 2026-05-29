@@ -2,15 +2,19 @@
 import os
 from pathlib import Path
 from datetime import timedelta
-# from dotenv import load_dotenv
-
-# load_dotenv()
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+DOTENV_PATH = BASE_DIR.parent / '.env'
+load_dotenv(DOTENV_PATH)
 
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-secret-key-here')
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    raise RuntimeError('DJANGO_SECRET_KEY environment variable is required')
+
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS', 'False') == 'True'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
