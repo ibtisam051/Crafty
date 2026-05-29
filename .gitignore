@@ -9,6 +9,11 @@
 /.venv
 /.venv_old
 /venv310
+/backend/.venv_new
+
+# local sqlite and media files
+/backend/db.sqlite3
+/backend/media/
 
 # testing
 /coverage
