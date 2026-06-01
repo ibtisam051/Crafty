@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import '../styles/hero.css';
 
 function HeroSection() {
@@ -7,8 +7,8 @@ function HeroSection() {
       <div className="hero-text">
         <h2>Authentic Pakistani Craftsmanship</h2>
         <p>
-          Discover handcrafted treasures from master artisans across Pakistan.
-          Each piece tells a story of heritage, skill, and timeless tradition.
+          Discover handcrafted treasures from master artisans across Pakistan. Each piece tells a
+          story of heritage, skill, and timeless tradition.
         </p>
 
         <button>Explore Collection</button>

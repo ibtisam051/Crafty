@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import '../styles/footer.css';
 
 function Footer() {
@@ -7,9 +7,7 @@ function Footer() {
       <div className="footer">
         <div className="footer-col">
           <h3>CRAFTY</h3>
-          <p>
-            Connecting authentic Pakistani artisans with customers worldwide
-          </p>
+          <p>Connecting authentic Pakistani artisans with customers worldwide</p>
         </div>
 
         <div className="footer-col">

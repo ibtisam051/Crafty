@@ -39,17 +39,41 @@ docker compose up --build
 
 The app expects the following values in `.env`:
 
-- `REDIS_URL` � Redis connection URL
-- `DJANGO_SECRET_KEY` � Django secret key
-- `DEBUG` � `True` or `False`
-- `ALLOWED_HOSTS` � comma-separated hostnames
-- `CORS_ALLOW_ALL_ORIGINS` � `True` or `False`
+- `REDIS_URL` — Redis connection URL
+- `DJANGO_SECRET_KEY` — Django secret key
+- `DEBUG` — `True` or `False`
+- `ALLOWED_HOSTS` — comma-separated hostnames
+- `CORS_ALLOW_ALL_ORIGINS` — `True` or `False`
 
 ## Notes
 
 - The backend uses `backend/entrypoint.sh` to run migrations and collect static files before starting Gunicorn.
 - Django now defaults `ALLOWED_HOSTS` to `localhost,127.0.0.1` when the env value is blank.
 - The frontend is built and served by Nginx from `Dockerfile.frontend`.
+
+## Linting
+
+### Frontend
+Run JavaScript linting and formatting from the project root:
+
+```bash
+npm run lint
+npm run lint:fix
+npm run format
+```
+
+### Backend
+Install dev tools in the backend environment and run:
+
+```bash
+cd backend
+python -m pip install -r requirements-dev.txt
+python -m ruff check .
+python -m black .
+python -m isort .
+```
+
+If `ruff`, `black`, or `isort` are not recognized as commands on Windows, use the `python -m` form or add your Python `Scripts` folder to `PATH`.
 
 ## Common commands
 

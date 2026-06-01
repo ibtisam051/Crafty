@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import HeroSection from "../components/HeroSection";
-import ProductsRow from "../components/ProductsRow";
-import ArtisansSection from "../components/ArtisansSection";
-import { getProducts } from "../services/api";
+import React, { useState, useEffect } from 'react';
+import HeroSection from '../components/HeroSection';
+import ProductsRow from '../components/ProductsRow';
+import ArtisansSection from '../components/ArtisansSection';
+import { getProducts } from '../services/api';
 
 function Home() {
   const [products, setProducts] = useState([]);

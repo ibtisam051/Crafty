@@ -31,22 +31,34 @@ export const AuthProvider = ({ children }) => {
     }
   });
 
-  console.log('[AuthContext] State after init:', { token: Boolean(token), refreshToken: Boolean(refreshToken), user: Boolean(user) });
+  console.log('[AuthContext] State after init:', {
+    token: Boolean(token),
+    refreshToken: Boolean(refreshToken),
+    user: Boolean(user),
+  });
 
   useEffect(() => {
-    if (token) localStorage.setItem('token', token); else localStorage.removeItem('token');
+    if (token) localStorage.setItem('token', token);
+    else localStorage.removeItem('token');
   }, [token]);
 
   useEffect(() => {
-    if (refreshToken) localStorage.setItem('refreshToken', refreshToken); else localStorage.removeItem('refreshToken');
+    if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
+    else localStorage.removeItem('refreshToken');
   }, [refreshToken]);
 
   useEffect(() => {
-    if (user) localStorage.setItem('user', JSON.stringify(user)); else localStorage.removeItem('user');
+    if (user) localStorage.setItem('user', JSON.stringify(user));
+    else localStorage.removeItem('user');
   }, [user]);
 
   const login = ({ access, refresh, user: u }) => {
-    console.log('[AuthContext] login() called with access:', access?.substring(0, 50), 'user:', u?.username);
+    console.log(
+      '[AuthContext] login() called with access:',
+      access?.substring(0, 50),
+      'user:',
+      u?.username,
+    );
     setToken(access);
     setRefreshToken(refresh);
     setUser(u || null);
@@ -57,7 +69,11 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setRefreshToken(null);
     setUser(null);
-    try { localStorage.removeItem('token'); localStorage.removeItem('refreshToken'); localStorage.removeItem('user'); } catch (e) {}
+    try {
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+    } catch (e) {}
     window.location.href = '/';
   };
 
@@ -70,7 +86,10 @@ export const AuthProvider = ({ children }) => {
     logout,
   };
 
-  console.log('[AuthContext] Providing value:', { isAuthenticated: value.isAuthenticated, userEmail: value.user?.email });
+  console.log('[AuthContext] Providing value:', {
+    isAuthenticated: value.isAuthenticated,
+    userEmail: value.user?.email,
+  });
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

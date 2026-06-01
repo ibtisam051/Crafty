@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { getArtisan } from "../services/api";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { getArtisan } from '../services/api';
 import '../styles/artistProfile.css';
 
 function ArtistProfilePage() {
@@ -35,13 +35,11 @@ function ArtistProfilePage() {
         {Array(fullStars)
           .fill(0)
           .map((_, i) => (
-            <span key={`full-${i}`} style={{ color: "#fbbf24" }}>
+            <span key={`full-${i}`} style={{ color: '#fbbf24' }}>
               ★
             </span>
           ))}
-        {hasHalfStar && (
-          <span style={{ color: "#fbbf24" }}>☆</span>
-        )}
+        {hasHalfStar && <span style={{ color: '#fbbf24' }}>☆</span>}
       </>
     );
   };
@@ -50,7 +48,11 @@ function ArtistProfilePage() {
     <>
       <div className="artist-profile-container">
         <div className="artist-profile-left">
-          <img src={artist.image || "/images/artist/artist.png"} alt={artist.business_name} className="artist-profile-image" />
+          <img
+            src={artist.image || '/images/artist/artist.png'}
+            alt={artist.business_name}
+            className="artist-profile-image"
+          />
         </div>
 
         <div className="artist-profile-right">
@@ -59,20 +61,19 @@ function ArtistProfilePage() {
               <h1 className="artist-profile-name">{artist.business_name}</h1>
               <div className="artist-profile-rating">
                 {renderStars(artist.average_rating || 0)}
-                <span style={{ marginLeft: "6px", color: "#777", fontSize: "14px" }}>
+                <span style={{ marginLeft: '6px', color: '#777', fontSize: '14px' }}>
                   · {artist.total_sales || 0} sales
                 </span>
               </div>
             </div>
-            <button
-              className="artist-profile-like-btn"
-              onClick={() => setLiked(!liked)}
-            >
-              {liked ? "❤️" : "🤍"}
+            <button className="artist-profile-like-btn" onClick={() => setLiked(!liked)}>
+              {liked ? '❤️' : '🤍'}
             </button>
           </div>
 
-          <p className="artist-profile-bio">{artist.bio || `Crafts exceptional pieces in ${artist.craft_specialty}.`}</p>
+          <p className="artist-profile-bio">
+            {artist.bio || `Crafts exceptional pieces in ${artist.craft_specialty}.`}
+          </p>
 
           <div className="artist-profile-meta">
             <div className="meta-item">
@@ -90,14 +91,25 @@ function ArtistProfilePage() {
       <div className="artist-products-container">
         <div className="artist-products-header">
           <span>Featured Products</span>
-          <div style={{ marginLeft: 8, background: "#eef2ff", color: "#3b82f6", padding: "4px 8px", borderRadius: 6 }}>
+          <div
+            style={{
+              marginLeft: 8,
+              background: '#eef2ff',
+              color: '#3b82f6',
+              padding: '4px 8px',
+              borderRadius: 6,
+            }}
+          >
             {artist.products?.length || 0}
           </div>
         </div>
         <div className="artist-products-grid">
           {artist.products?.map((product) => (
             <div key={product.id} className="artist-product-card">
-              <img src={product.images?.[0]?.image || "/images/products/default.png"} alt={product.name} />
+              <img
+                src={product.images?.[0]?.image || '/images/products/default.png'}
+                alt={product.name}
+              />
               <div className="artist-product-info">
                 <h4>{product.name}</h4>
                 <p>${product.price}.00</p>

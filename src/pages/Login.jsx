@@ -17,7 +17,11 @@ function Login() {
       // send email + password (backend expects email as USERNAME_FIELD)
       const response = await login({ email: credentials.email, password: credentials.password });
       // delegate storage to AuthContext so UI updates
-      auth.login({ access: response.data.access, refresh: response.data.refresh, user: response.data.user });
+      auth.login({
+        access: response.data.access,
+        refresh: response.data.refresh,
+        user: response.data.user,
+      });
       alert('Logged in successfully!');
     } catch (error) {
       console.error('Login error', error?.response || error);
@@ -30,7 +34,13 @@ function Login() {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input name="email" placeholder="Email" onChange={handleChange} required />
-        <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          onChange={handleChange}
+          required
+        />
         <button type="submit">Login</button>
       </form>
     </div>

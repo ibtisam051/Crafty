@@ -78,7 +78,7 @@
   padding: 30px;
   background: white;
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
 }
 
@@ -148,25 +148,65 @@
 
 .cta-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 768px) {
-  .about-hero-content h1 { font-size: 2rem; }
-  .about-content h2 { font-size: 1.8rem; }
-  .values-grid { grid-template-columns: 1fr; }
-  .team-grid { grid-template-columns: 1fr; }
-  .mission-stats { gap: 30px; }
-  .stat h3 { font-size: 2.5rem; }
-  .cta-buttons { flex-direction: column; align-items: center; }
-  .cta-btn { width: 200px; }
+  .about-hero-content h1 {
+    font-size: 2rem;
+  }
+  .about-content h2 {
+    font-size: 1.8rem;
+  }
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+  .mission-stats {
+    gap: 30px;
+  }
+  .stat h3 {
+    font-size: 2.5rem;
+  }
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  .cta-btn {
+    width: 200px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
-  .about-content h2, .team-card h3, .value-card h3, .cta-content h2 { color: #fff; }
-  .about-content > p, .value-card p, .team-card p, .stat p, .cta-content > p { color: #ccc; }
-  .value-card, .team-card { background: #1a1a1a; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-  .team-section { background: #121212; }
-  .about-cta { background: #1e3a8a; }
-  .cta-btn.secondary { background: transparent; color: #fff; border-color: #fff; }
+  .about-content h2,
+  .team-card h3,
+  .value-card h3,
+  .cta-content h2 {
+    color: #fff;
+  }
+  .about-content > p,
+  .value-card p,
+  .team-card p,
+  .stat p,
+  .cta-content > p {
+    color: #ccc;
+  }
+  .value-card,
+  .team-card {
+    background: #1a1a1a;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  .team-section {
+    background: #121212;
+  }
+  .about-cta {
+    background: #1e3a8a;
+  }
+  .cta-btn.secondary {
+    background: transparent;
+    color: #fff;
+    border-color: #fff;
+  }
 }

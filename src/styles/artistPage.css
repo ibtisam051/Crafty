@@ -93,7 +93,7 @@
 }
 
 .artist-card:hover {
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
 
@@ -199,21 +199,21 @@
     padding: 0 20px;
     gap: 25px;
   }
-  
+
   .sidebar {
     padding: 25px;
     border-radius: 12px;
   }
-  
+
   .filters-list {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .artist-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 25px;
   }
-  
+
   .artist-card {
     height: 388px;
   }
@@ -227,7 +227,7 @@
     padding: 0;
     gap: 30px;
   }
-  
+
   .sidebar {
     width: 260px;
     position: sticky;
@@ -235,25 +235,25 @@
     height: calc(100vh - 120px);
     margin-bottom: 0;
   }
-  
+
   .filters-list {
     grid-template-columns: 1fr;
   }
-  
+
   .filters-list label {
     padding: 6px 0;
     background: transparent;
   }
-  
+
   .artist-main {
     flex: 1;
   }
-  
+
   .artist-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 25px;
   }
-  
+
   .load-more button {
     width: auto;
   }
@@ -265,16 +265,16 @@
     margin: 40px auto;
     gap: 40px;
   }
-  
+
   .artist-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
   }
-  
+
   .artist-card {
     padding: 20px;
   }
-  
+
   .artist-name {
     font-size: 1.25rem;
   }
@@ -284,16 +284,16 @@
   .artist-page-container {
     width: 95%;
   }
-  
+
   .sidebar {
     width: 280px;
     padding: 30px;
   }
-  
+
   .sidebar-title {
     font-size: 1.25rem;
   }
-  
+
   .artist-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -304,17 +304,17 @@
     width: 90%;
     max-width: 1400px;
   }
-  
+
   .sidebar {
     width: 300px;
   }
-  
+
   .artist-grid {
     gap: 35px;
   }
-  
+
   .artist-card:hover {
-    box-shadow: 0px 6px 20px rgba(0,0,0,0.1);
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.1);
     transform: translateY(-4px);
   }
 }
@@ -325,40 +325,40 @@
     margin: 15px auto;
     gap: 15px;
   }
-  
+
   .sidebar {
     padding: 15px;
   }
-  
+
   .filters-list {
     grid-template-columns: 1fr;
   }
-  
+
   .filters-list label {
     padding: 10px;
   }
-  
+
   .artist-grid {
     gap: 15px;
   }
-  
+
   .artist-card {
     padding: 12px;
     min-height: 350px;
   }
-  
+
   .artist-card-image {
     min-height: 180px;
   }
-  
+
   .artist-card-image img {
     height: 180px;
   }
-  
+
   .artist-name {
     font-size: 1rem;
   }
-  
+
   .view-profile-btn {
     padding: 10px 20px;
     font-size: 0.8125rem;
@@ -369,17 +369,17 @@
   .artist-page-container {
     margin: 15px auto;
   }
-  
+
   .sidebar {
     height: auto;
     max-height: 50vh;
     overflow-y: auto;
   }
-  
+
   .filters-list {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   .artist-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -389,7 +389,7 @@
   .artist-card {
     border-width: 0.5px;
   }
-  
+
   .sidebar {
     border-width: 0.5px;
   }
@@ -411,28 +411,28 @@
   .artist-page-container {
     background: #121212;
   }
-  
+
   .sidebar,
   .artist-card {
     background: #1e1e1e;
     border-color: #333;
   }
-  
+
   .sidebar-title,
   .artist-name {
     color: #e0e0e0;
   }
-  
+
   .artist-type,
   .filter-count {
     color: #aaa;
   }
-  
+
   .filters-list label {
     background: #2a2a2a;
     color: #ddd;
   }
-  
+
   .filters-list label:hover {
     background: #333;
   }
@@ -445,22 +445,22 @@
     margin: 0;
     padding: 0;
   }
-  
+
   .sidebar {
     display: none;
   }
-  
+
   .artist-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 15px;
   }
-  
+
   .artist-card {
     break-inside: avoid;
     box-shadow: none;
     border: 1px solid #ddd;
   }
-  
+
   .artist-like-btn,
   .view-profile-btn,
   .load-more {

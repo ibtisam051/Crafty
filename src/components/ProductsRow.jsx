@@ -1,9 +1,9 @@
-import React from "react";
-import ProductCard from "./ProductCard";
-import { Link } from "react-router-dom";
+import React from 'react';
+import ProductCard from './ProductCard';
+import { Link } from 'react-router-dom';
 import '../styles/products.css';
 
-function ProductsRow({ products, title = "Products", showViewAll = true, variant = "home" }) {
+function ProductsRow({ products, title = 'Products', showViewAll = true, variant = 'home' }) {
   return (
     <div className="products-section">
       {title && (

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import ArtisanCard from "./ArtisanCard";
-import { getArtisans } from "../services/api";
+import React, { useState, useEffect } from 'react';
+import ArtisanCard from './ArtisanCard';
+import { getArtisans } from '../services/api';
 import '../styles/artisans.css';
 
 function ArtisansSection() {
@@ -38,4 +38,3 @@ function ArtisansSection() {
 }
 
 export default ArtisansSection;
-  

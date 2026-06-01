@@ -1,6 +1,6 @@
 body {
   background: #f5f5f7;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen;
   color: #1c1c1c;
   margin: 0;
   padding: 0;
@@ -235,7 +235,7 @@ body {
   border-radius: 12px;
   border: 1px solid #e5e5e5;
   position: sticky;
-  top: 100px; 
+  top: 100px;
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -261,7 +261,7 @@ body {
   margin-right: 8px;
 }
 
-.price-filter input[type="range"] {
+.price-filter input[type='range'] {
   width: 100%;
 }
 
@@ -325,13 +325,13 @@ body {
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .cart-controls {
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
   }
-  
+
   .quantity-controls {
     justify-content: center;
   }
@@ -359,38 +359,38 @@ body {
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  
+
   .products-section {
     width: 95%;
     margin: 30px auto;
   }
-  
+
   .products-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
-  
+
   .product-image-container {
     height: 200px;
   }
-  
+
   .product-price-section {
     flex-direction: column;
     align-items: stretch;
     gap: 15px;
   }
-  
+
   .cart-controls {
     flex-direction: row;
     justify-content: space-between;
   }
-  
+
   .quantity-controls {
     flex: 1;
     max-width: 120px;
   }
-  
+
   .buy-btn {
     flex: 1;
   }
@@ -398,70 +398,70 @@ body {
 
 /* DARK MODE */
 @media (prefers-color-scheme: dark) {
-  body { 
-    background: #121212; 
-    color: #e0e0e0; 
+  body {
+    background: #121212;
+    color: #e0e0e0;
   }
-  
-  .product-card, 
-  .sidebar { 
-    background: #1a1a1a; 
-    border-color: #333; 
+
+  .product-card,
+  .sidebar {
+    background: #1a1a1a;
+    border-color: #333;
   }
-  
-  .product-title, 
-  .product-price, 
-  .sidebar-title { 
-    color: #ffffff; 
+
+  .product-title,
+  .product-price,
+  .sidebar-title {
+    color: #ffffff;
   }
-  
-  .product-category, 
-  .filters-list label { 
-    color: #aaa; 
+
+  .product-category,
+  .filters-list label {
+    color: #aaa;
   }
-  
-  .product-card:hover { 
-    box-shadow: 0px 6px 20px rgba(0,0,0,0.3); 
+
+  .product-card:hover {
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
   }
-  
-  .buy-btn, 
-  .load-more button { 
-    background: #2563eb; 
+
+  .buy-btn,
+  .load-more button {
+    background: #2563eb;
   }
-  
-  .buy-btn:hover, 
-  .load-more button:hover { 
-    background: #1d4ed8; 
+
+  .buy-btn:hover,
+  .load-more button:hover {
+    background: #1d4ed8;
   }
-  
-  .shop-fixed-sidebar { 
-    background: #121212; 
+
+  .shop-fixed-sidebar {
+    background: #121212;
   }
-  
-  .product-card.shop { 
-    background: #2d2d2d; 
-    border-color: #444; 
+
+  .product-card.shop {
+    background: #2d2d2d;
+    border-color: #444;
   }
-  
-  .product-card-link { 
-    color: inherit; 
+
+  .product-card-link {
+    color: inherit;
   }
-  
+
   /* Dark mode for cart controls */
   .quantity-controls {
     background: #2d2d2d;
   }
-  
+
   .quantity-btn {
     background: #1a1a1a;
     color: #e0e0e0;
   }
-  
+
   .quantity-btn:hover {
     background: #3b82f6;
     color: white;
   }
-  
+
   .quantity {
     color: #e0e0e0;
   }

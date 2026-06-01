@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useCart } from "../context/CartContext";
-import { createOrder } from "../services/api";
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
+import { createOrder } from '../services/api';
 import '../styles/checkout.css';
 
 function Checkout() {
@@ -12,16 +12,16 @@ function Checkout() {
   const quantity = location.state?.quantity || 1;
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-    town: "",
-    date: "",
-    cardNumber: "",
-    cardHolder: "",
-    cvc: "",
-    paymentMethod: "credit-card",
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    town: '',
+    date: '',
+    cardNumber: '',
+    cardHolder: '',
+    cvc: '',
+    paymentMethod: 'credit-card',
     agreeMarketing: false,
     agreeTerms: false,
   });
@@ -30,25 +30,25 @@ function Checkout() {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.agreeTerms) {
-      alert("Please agree to terms and conditions");
+      alert('Please agree to terms and conditions');
       return;
     }
     try {
       const shippingAddress = `${formData.address}, ${formData.town}`;
       await createOrder({ shipping_address: shippingAddress });
       clearCart();
-      alert("Order placed successfully!");
-      navigate("/");
+      alert('Order placed successfully!');
+      navigate('/');
     } catch (error) {
       console.error('Error placing order:', error);
-      alert("Error placing order. Please try again.");
+      alert('Error placing order. Please try again.');
     }
   };
 
@@ -60,7 +60,6 @@ function Checkout() {
     <div className="checkout-container">
       <div className="checkout-left">
         <form onSubmit={handleSubmit}>
-
           <div className="checkout-card">
             <h3>Billing Info</h3>
             <p className="step-label">Step 1 of 3</p>
@@ -126,13 +125,13 @@ function Checkout() {
                   type="radio"
                   name="paymentMethod"
                   value="credit-card"
-                  checked={formData.paymentMethod === "credit-card"}
+                  checked={formData.paymentMethod === 'credit-card'}
                   onChange={handleChange}
                 />
                 <span>Credit Card</span>
               </label>
 
-              {formData.paymentMethod === "credit-card" && (
+              {formData.paymentMethod === 'credit-card' && (
                 <div className="card-details">
                   <div className="form-row">
                     <div className="form-group">
@@ -183,8 +182,14 @@ function Checkout() {
                   </div>
 
                   <div className="payment-logos">
-                    <img src="https://e7.pngegg.com/pngimages/648/10/png-clipart-visa-logo-credit-card-visa-debit-card-payment-card-mastercard-visa-blue-text.png" alt="Visa" />
-                    <img src="https://banner2.cleanpng.com/lnd/20241123/ry/85dda930e3465f586e2b20700028d0.webp" alt="Mastercard" />
+                    <img
+                      src="https://e7.pngegg.com/pngimages/648/10/png-clipart-visa-logo-credit-card-visa-debit-card-payment-card-mastercard-visa-blue-text.png"
+                      alt="Visa"
+                    />
+                    <img
+                      src="https://banner2.cleanpng.com/lnd/20241123/ry/85dda930e3465f586e2b20700028d0.webp"
+                      alt="Mastercard"
+                    />
                   </div>
                 </div>
               )}
@@ -194,15 +199,18 @@ function Checkout() {
                   type="radio"
                   name="paymentMethod"
                   value="paypal"
-                  checked={formData.paymentMethod === "paypal"}
+                  checked={formData.paymentMethod === 'paypal'}
                   onChange={handleChange}
                 />
                 <span>PayPal</span>
               </label>
 
-              {formData.paymentMethod === "paypal" && (
+              {formData.paymentMethod === 'paypal' && (
                 <div className="paypal-logo">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/120px-PayPal.svg.png?20241230110020" alt="PayPal" />
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/120px-PayPal.svg.png?20241230110020"
+                    alt="PayPal"
+                  />
                 </div>
               )}
             </div>
@@ -246,7 +254,6 @@ function Checkout() {
               </div>
             </div>
           </div>
-
         </form>
       </div>
 
@@ -260,8 +267,10 @@ function Checkout() {
               <div className="item-details">
                 <h4>{product.name}</h4>
                 <div className="item-rating">
-                  <span style={{ color: "#fbbf24" }}>★★★★★</span>
-                  <span style={{ fontSize: "12px", color: "#777", marginLeft: "4px" }}>440 Reviewers</span>
+                  <span style={{ color: '#fbbf24' }}>★★★★★</span>
+                  <span style={{ fontSize: '12px', color: '#777', marginLeft: '4px' }}>
+                    440 Reviewers
+                  </span>
                 </div>
               </div>
             </div>
@@ -287,17 +296,17 @@ function Checkout() {
               <span>${tax}</span>
             </div>
             <div className="add-coupon">
-            <input type="text" placeholder="Add coupon code" />
-            <button type="button">Apply now</button>
-          </div>
-          
+              <input type="text" placeholder="Add coupon code" />
+              <button type="button">Apply now</button>
+            </div>
+
             <div className="price-row total-row">
               <span>Total Order Price</span>
               <span>${total}</span>
             </div>
             <div className="price-row">
               <span>Overall price and includes order discount</span>
-          </div>
+            </div>
           </div>
         </div>
       </div>

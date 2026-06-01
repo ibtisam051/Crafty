@@ -201,27 +201,27 @@
     margin: 30px auto;
     border-radius: 12px;
   }
-  
+
   .artist-profile-right {
     padding: 25px;
     border-radius: 12px;
   }
-  
+
   .artist-profile-name {
     font-size: 2rem;
   }
-  
+
   .artist-reviews-container {
     padding: 25px;
     margin: 30px auto;
     border-radius: 12px;
   }
-  
+
   .artist-review-item {
     flex-direction: row;
     align-items: flex-start;
   }
-  
+
   .artist-review-header {
     flex: 0 0 120px;
     flex-direction: column;
@@ -229,12 +229,12 @@
     text-align: center;
     gap: 8px;
   }
-  
+
   .artist-review-item img {
     width: 60px;
     height: 60px;
   }
-  
+
   .artist-review-content {
     flex: 1;
   }
@@ -248,47 +248,47 @@
     flex-direction: row;
     gap: 40px;
   }
-  
+
   .artist-profile-left {
     flex: 0 0 300px;
   }
-  
+
   .artist-profile-image {
     max-width: 100%;
     margin: 0;
   }
-  
+
   .artist-profile-header {
     flex-direction: row;
     justify-content: space-between;
   }
-  
+
   .artist-profile-header-top {
     flex: 1;
   }
-  
+
   .artist-profile-like-btn {
     align-self: flex-start;
   }
-  
+
   .meta-item {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
   }
-  
+
   .artist-reviews-container {
     max-width: 95%;
     padding: 30px;
   }
-  
+
   .artist-review-header {
     flex: 0 0 150px;
     flex-direction: row;
     align-items: center;
     text-align: left;
   }
-  
+
   .artist-review-info {
     flex: 1;
   }
@@ -299,37 +299,37 @@
     max-width: 1200px;
     padding: 40px;
   }
-  
+
   .artist-profile-left {
     flex: 0 0 350px;
   }
-  
+
   .artist-profile-right {
     padding: 35px;
   }
-  
+
   .artist-profile-name {
     font-size: 2rem;
   }
-  
+
   .artist-profile-like-btn {
     font-size: 2rem;
   }
-  
+
   .artist-profile-bio {
     font-size: 1rem;
     line-height: 1.6;
   }
-  
+
   .artist-reviews-container {
     max-width: 1200px;
     padding: 35px;
   }
-  
+
   .artist-reviews-header {
     font-size: 1.25rem;
   }
-  
+
   .artist-review-item img {
     width: 50px;
     height: 50px;
@@ -340,11 +340,11 @@
   .artist-profile-name {
     font-size: 2.25rem;
   }
-  
+
   .artist-profile-like-btn {
     font-size: 2.25rem;
   }
-  
+
   .artist-profile-bio {
     font-size: 1.0625rem;
     line-height: 1.7;
@@ -357,34 +357,34 @@
     margin: 15px auto;
     gap: 20px;
   }
-  
+
   .artist-profile-right {
     padding: 15px;
   }
-  
+
   .artist-profile-name {
     font-size: 1.5rem;
   }
-  
+
   .artist-profile-like-btn {
     font-size: 1.5rem;
     padding: 5px;
   }
-  
+
   .artist-profile-bio {
     font-size: 0.875rem;
     line-height: 1.5;
   }
-  
+
   .artist-reviews-container {
     padding: 15px;
     margin: 20px auto;
   }
-  
+
   .artist-review-header {
     align-items: flex-start;
   }
-  
+
   .artist-review-item img {
     width: 40px;
     height: 40px;
@@ -397,16 +397,16 @@
     gap: 20px;
     padding: 15px;
   }
-  
+
   .artist-profile-left {
     flex: 0 0 40%;
   }
-  
+
   .artist-profile-right {
     flex: 1;
     padding: 15px;
   }
-  
+
   .artist-review-header {
     flex: 0 0 120px;
   }
@@ -416,7 +416,7 @@
   .artist-profile-image {
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
   }
-  
+
   .artist-reviews-container {
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.08);
   }
@@ -434,35 +434,35 @@
   .artist-profile-container {
     background: #1a1a1a;
   }
-  
+
   .artist-profile-right,
   .artist-reviews-container {
     background: #2d2d2d;
   }
-  
+
   .artist-profile-name {
     color: #ffffff;
   }
-  
+
   .artist-profile-bio,
   .artist-review-text {
     color: #cccccc;
   }
-  
+
   .meta-label,
   .artist-review-location {
     color: #aaaaaa;
   }
-  
+
   .meta-value {
     color: #60a5fa;
   }
-  
+
   .artist-profile-meta,
   .artist-review-item {
     border-color: #444;
   }
-  
+
   .artist-show-more {
     color: #60a5fa;
   }
@@ -477,24 +477,24 @@
     box-shadow: none;
     border: 1px solid #ddd;
   }
-  
+
   .artist-profile-like-btn,
   .artist-show-more {
     display: none;
   }
-  
+
   .artist-profile-image {
     max-width: 200px;
     box-shadow: none;
     border: 1px solid #ddd;
   }
-  
+
   .artist-reviews-container {
     box-shadow: none;
     border: 1px solid #ddd;
     break-inside: avoid;
   }
-  
+
   .artist-review-item {
     break-inside: avoid;
     page-break-inside: avoid;
@@ -505,7 +505,7 @@
   .artist-profile-header-top {
     flex-direction: column;
   }
-  
+
   .artist-profile-like-btn {
     align-self: flex-start;
   }
@@ -516,7 +516,7 @@
   .artist-reviews-container {
     max-width: 1400px;
   }
-  
+
   .artist-profile-left {
     flex: 0 0 400px;
   }

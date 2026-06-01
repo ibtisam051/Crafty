@@ -9,18 +9,22 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('reviews', '0001_initial'),
-        ('users', '0001_initial'),
+        ("reviews", "0001_initial"),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='review',
-            name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reviews', to='users.user'),
+            model_name="review",
+            name="user",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="reviews",
+                to="users.user",
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='review',
-            unique_together={('product', 'user')},
+            name="review",
+            unique_together={("product", "user")},
         ),
     ]

@@ -9,24 +9,36 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('products', '0001_initial'),
-        ('users', '0001_initial'),
+        ("products", "0001_initial"),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='product',
-            name='artisan',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='products', to='users.artisanprofile'),
+            model_name="product",
+            name="artisan",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="products",
+                to="users.artisanprofile",
+            ),
         ),
         migrations.AddField(
-            model_name='product',
-            name='category',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='products', to='products.category'),
+            model_name="product",
+            name="category",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="products",
+                to="products.category",
+            ),
         ),
         migrations.AddField(
-            model_name='productimage',
-            name='product',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='images', to='products.product'),
+            model_name="productimage",
+            name="product",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="images",
+                to="products.product",
+            ),
         ),
     ]

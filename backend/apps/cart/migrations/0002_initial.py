@@ -9,43 +9,59 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('cart', '0001_initial'),
-        ('products', '0001_initial'),
-        ('users', '0001_initial'),
+        ("cart", "0001_initial"),
+        ("products", "0001_initial"),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='cart',
-            name='user',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='cart', to='users.user'),
+            model_name="cart",
+            name="user",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="cart",
+                to="users.user",
+            ),
         ),
         migrations.AddField(
-            model_name='cartitem',
-            name='cart',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='cart.cart'),
+            model_name="cartitem",
+            name="cart",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="items",
+                to="cart.cart",
+            ),
         ),
         migrations.AddField(
-            model_name='cartitem',
-            name='product',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='products.product'),
+            model_name="cartitem",
+            name="product",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="products.product"
+            ),
         ),
         migrations.AddField(
-            model_name='savedforlater',
-            name='product',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='products.product'),
+            model_name="savedforlater",
+            name="product",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="products.product"
+            ),
         ),
         migrations.AddField(
-            model_name='savedforlater',
-            name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='saved_items', to='users.user'),
+            model_name="savedforlater",
+            name="user",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="saved_items",
+                to="users.user",
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='cartitem',
-            unique_together={('cart', 'product')},
+            name="cartitem",
+            unique_together={("cart", "product")},
         ),
         migrations.AlterUniqueTogether(
-            name='savedforlater',
-            unique_together={('user', 'product')},
+            name="savedforlater",
+            unique_together={("user", "product")},
         ),
     ]

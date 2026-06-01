@@ -1,12 +1,14 @@
 """
 Core utilities for caching, cookies, and session management
 """
-from django.core.cache import caches, cache
-from django.views.decorators.cache import cache_page, cache_control
-from django.utils.decorators import decorator_from_middleware_with_args
-from django.middleware.cache import UpdateCacheMiddleware, FetchFromCacheMiddleware
-from functools import wraps
+
 import logging
+from functools import wraps
+
+from django.core.cache import cache, caches
+from django.middleware.cache import FetchFromCacheMiddleware, UpdateCacheMiddleware
+from django.utils.decorators import decorator_from_middleware_with_args
+from django.views.decorators.cache import cache_control, cache_page
 
 logger = logging.getLogger(__name__)
 
@@ -15,10 +17,11 @@ logger = logging.getLogger(__name__)
 # CACHE UTILITIES
 # ============================================================================
 
-def get_cache(cache_name='default'):
+
+def get_cache(cache_name="default"):
     """
     Get a specific cache backend.
-    
+
     Usage:
         cache_backend = get_cache('products')
         cache_backend.set('key', value, timeout=300)
@@ -26,14 +29,14 @@ def get_cache(cache_name='default'):
     return caches[cache_name]
 
 
-def cache_get(key, cache_name='default'):
+def cache_get(key, cache_name="default"):
     """
     Retrieve a value from cache.
-    
+
     Args:
         key: Cache key
         cache_name: Cache backend name (default, session, products)
-    
+
     Returns:
         Cached value or None
     """
@@ -46,10 +49,10 @@ def cache_get(key, cache_name='default'):
     return value
 
 
-def cache_set(key, value, timeout=None, cache_name='default'):
+def cache_set(key, value, timeout=None, cache_name="default"):
     """
     Store a value in cache.
-    
+
     Args:
         key: Cache key
         value: Value to cache
@@ -61,33 +64,33 @@ def cache_set(key, value, timeout=None, cache_name='default'):
     logger.debug(f"Cache SET: {key} (timeout: {timeout}s)")
 
 
-def cache_delete(key, cache_name='default'):
+def cache_delete(key, cache_name="default"):
     """Delete a value from cache."""
     caches[cache_name].delete(key)
     logger.debug(f"Cache DELETE: {key}")
 
 
-def cache_clear(cache_name='default'):
+def cache_clear(cache_name="default"):
     """Clear entire cache backend."""
     caches[cache_name].clear()
     logger.warning(f"Cache CLEARED: {cache_name}")
 
 
-def cache_or_compute(key, compute_func, timeout=None, cache_name='default'):
+def cache_or_compute(key, compute_func, timeout=None, cache_name="default"):
     """
     Retrieve from cache or compute if missing.
-    
+
     Usage:
         products = cache_or_compute('all_products', lambda: Product.objects.all(), timeout=1800, cache_name='products')
     """
     cache_backend = caches[cache_name]
     value = cache_backend.get(key)
-    
+
     if value is None:
         logger.debug(f"Computing cache value for: {key}")
         value = compute_func()
         cache_backend.set(key, value, timeout)
-    
+
     return value
 
 
@@ -95,43 +98,46 @@ def cache_or_compute(key, compute_func, timeout=None, cache_name='default'):
 # DECORATOR FOR CACHING API RESPONSES
 # ============================================================================
 
-def api_cache(timeout=300, cache_name='default', key_prefix=''):
+
+def api_cache(timeout=300, cache_name="default", key_prefix=""):
     """
     Decorator to cache API response for GET requests.
-    
+
     Usage:
         @api_cache(timeout=1800, cache_name='products')
         def get_products(request):
             ...
     """
+
     def decorator(view_func):
         @wraps(view_func)
         def wrapper(request, *args, **kwargs):
             # Only cache GET requests
-            if request.method != 'GET':
+            if request.method != "GET":
                 return view_func(request, *args, **kwargs)
-            
+
             # Build cache key from request
             cache_key = f"{key_prefix}:{request.get_full_path()}"
             cache_backend = caches[cache_name]
-            
+
             # Try to get from cache
             cached_response = cache_backend.get(cache_key)
             if cached_response is not None:
                 logger.debug(f"Returning cached API response: {cache_key}")
                 return cached_response
-            
+
             # Call view and cache response
             response = view_func(request, *args, **kwargs)
-            
+
             # Cache response if status is 200
-            if hasattr(response, 'status_code') and response.status_code == 200:
+            if hasattr(response, "status_code") and response.status_code == 200:
                 cache_backend.set(cache_key, response, timeout)
                 logger.debug(f"Cached API response: {cache_key}")
-            
+
             return response
-        
+
         return wrapper
+
     return decorator
 
 
@@ -139,10 +145,11 @@ def api_cache(timeout=300, cache_name='default', key_prefix=''):
 # COOKIE UTILITIES
 # ============================================================================
 
+
 def set_cookie(response, key, value, max_age=None, secure=False, httponly=True):
     """
     Safely set a cookie on response.
-    
+
     Usage:
         response.set_cookie('theme', 'dark', max_age=86400*365)
     """
@@ -152,7 +159,7 @@ def set_cookie(response, key, value, max_age=None, secure=False, httponly=True):
         max_age=max_age,
         secure=secure,
         httponly=httponly,
-        samesite='Lax'
+        samesite="Lax",
     )
     logger.debug(f"Cookie SET: {key}")
     return response
@@ -161,7 +168,7 @@ def set_cookie(response, key, value, max_age=None, secure=False, httponly=True):
 def get_cookie(request, key, default=None):
     """
     Safely get a cookie from request.
-    
+
     Usage:
         theme = get_cookie(request, 'theme', 'light')
     """
@@ -174,7 +181,7 @@ def delete_cookie(response, key):
     """
     Delete a cookie from response.
     """
-    response.delete_cookie(key, samesite='Lax')
+    response.delete_cookie(key, samesite="Lax")
     logger.debug(f"Cookie DELETE: {key}")
     return response
 
@@ -183,10 +190,11 @@ def delete_cookie(response, key):
 # SESSION UTILITIES
 # ============================================================================
 
+
 def set_session(request, key, value):
     """
     Set a session value.
-    
+
     Usage:
         set_session(request, 'user_preferences', {'theme': 'dark'})
     """
@@ -198,7 +206,7 @@ def set_session(request, key, value):
 def get_session(request, key, default=None):
     """
     Get a session value.
-    
+
     Usage:
         prefs = get_session(request, 'user_preferences', {})
     """
@@ -237,9 +245,10 @@ def get_or_create_session_id(request):
 # CACHE INVALIDATION HELPERS
 # ============================================================================
 
+
 def invalidate_product_cache():
     """Invalidate all product-related caches."""
-    cache_backend = caches['products']
+    cache_backend = caches["products"]
     cache_backend.clear()
     logger.warning("Product cache invalidated")
 
@@ -247,17 +256,17 @@ def invalidate_product_cache():
 def invalidate_user_cache(user_id):
     """Invalidate cache for specific user."""
     keys_to_delete = [
-        f'user_profile:{user_id}',
-        f'user_cart:{user_id}',
-        f'user_orders:{user_id}',
+        f"user_profile:{user_id}",
+        f"user_cart:{user_id}",
+        f"user_orders:{user_id}",
     ]
     for key in keys_to_delete:
-        caches['default'].delete(key)
+        caches["default"].delete(key)
     logger.warning(f"User cache invalidated: {user_id}")
 
 
 def invalidate_order_cache():
     """Invalidate all order-related caches."""
-    cache_backend = caches['default']
-    cache_backend.delete('all_orders')
+    cache_backend = caches["default"]
+    cache_backend.delete("all_orders")
     logger.warning("Order cache invalidated")

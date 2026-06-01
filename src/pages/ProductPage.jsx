@@ -1,6 +1,6 @@
-import React, { useState, useMemo, useEffect } from "react";
-import ProductsRow from "../components/ProductsRow";
-import { getProducts, getCategories } from "../services/api";
+import React, { useState, useMemo, useEffect } from 'react';
+import ProductsRow from '../components/ProductsRow';
+import { getProducts, getCategories } from '../services/api';
 
 function ProductPage() {
   const [products, setProducts] = useState([]);
@@ -8,7 +8,7 @@ function ProductPage() {
   const [loading, setLoading] = useState(true);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [maxPrice, setMaxPrice] = useState(300);
-  const [displayCount, setDisplayCount] = useState(1000);  // show all by default
+  const [displayCount, setDisplayCount] = useState(1000); // show all by default
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,7 +18,7 @@ function ProductPage() {
         const cats = categoriesRes.data.results || categoriesRes.data;
         setCategories(cats);
         const filters = {};
-        cats.forEach(cat => filters[cat.name] = true);
+        cats.forEach((cat) => (filters[cat.name] = true));
         setSelectedFilters(filters);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -38,7 +38,7 @@ function ProductPage() {
   }, [products]);
 
   const allCategories = useMemo(() => {
-    return categories.map(cat => cat.name);
+    return categories.map((cat) => cat.name);
   }, [categories]);
 
   const filteredProducts = useMemo(() => {
@@ -88,13 +88,7 @@ function ProductPage() {
 
           <h4 className="sidebar-title">PRICE</h4>
           <div className="price-filter">
-            <input
-              type="range"
-              min="0"
-              max="300"
-              value={maxPrice}
-              onChange={handlePriceChange}
-            />
+            <input type="range" min="0" max="300" value={maxPrice} onChange={handlePriceChange} />
             <p>Max. ${maxPrice}.00</p>
           </div>
         </aside>

@@ -6,14 +6,14 @@
   align-items: center;
   border-bottom: 1px solid #f0f0f0;
   background: white;
-  box-shadow: 0px 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05);
   position: relative;
   z-index: 1000;
   box-sizing: border-box;
 }
 
 .logo {
-  font-size: 1.125rem; 
+  font-size: 1.125rem;
   font-weight: 700;
   letter-spacing: 1px;
   color: #201c56;
@@ -165,23 +165,23 @@
   .navbar {
     padding: 12px 15px;
   }
-  
+
   .logo {
     font-size: 1rem;
     max-width: 80px;
   }
-  
+
   .search-bar {
     margin: 0 10px;
     padding: 0 12px;
   }
-  
+
   .search-bar input {
     padding: 10px 0;
     font-size: 0.8125rem;
-    min-width: 120px; 
+    min-width: 120px;
   }
-  
+
   .navbar-toggle {
     width: 26px;
     height: 18px;
@@ -193,13 +193,13 @@
     font-size: 0.875rem;
     max-width: 70px;
   }
-  
+
   .search-bar input::placeholder {
     font-size: 0.75rem;
   }
-  
+
   .search-bar {
-    min-width: 150px; 
+    min-width: 150px;
   }
 }
 
@@ -208,7 +208,7 @@
     padding: 60px 20px 20px;
     gap: 20px;
   }
-  
+
   .nav-links a {
     font-size: 1rem;
     padding: 8px 20px;
@@ -219,23 +219,23 @@
   .navbar {
     padding: 18px 40px;
   }
-  
+
   .logo {
     font-size: 1.375rem;
     letter-spacing: 1.5px;
     max-width: none;
   }
-  
+
   .navbar-toggle {
     display: none;
   }
-  
+
   .search-bar {
     width: 280px;
     max-width: 280px;
     margin: 0 20px;
   }
-  
+
   .nav-links {
     display: flex;
     position: static;
@@ -244,7 +244,7 @@
     padding: 0;
     gap: 25px;
   }
-  
+
   .nav-links a {
     font-size: 0.9375rem;
     padding: 0;
@@ -252,11 +252,11 @@
     max-width: none;
     background: transparent;
   }
-  
+
   .nav-links a:hover {
     background: transparent;
   }
-  
+
   .nav-backdrop {
     display: none !important;
   }
@@ -266,25 +266,25 @@
   .navbar {
     padding: 20px 60px;
   }
-  
+
   .logo {
     font-size: 1.5rem;
     letter-spacing: 2px;
   }
-  
+
   .search-bar {
     width: 320px;
     max-width: 320px;
   }
-  
+
   .search-bar input {
     font-size: 0.875rem;
   }
-  
+
   .nav-links {
     gap: 35px;
   }
-  
+
   .nav-links a {
     font-size: 0.9375rem;
   }
@@ -296,7 +296,7 @@
     max-width: 1600px;
     margin: 0 auto;
   }
-  
+
   .search-bar {
     width: 350px;
     max-width: 350px;
@@ -311,21 +311,21 @@
   .navbar {
     padding: 12px 15px;
   }
-  
+
   .logo {
     font-size: 1.125rem;
     letter-spacing: 0.5px;
   }
-  
+
   .search-bar {
     padding: 0 12px;
   }
-  
+
   .search-bar input {
     padding: 10px 0;
     font-size: 0.8125rem;
   }
-  
+
   .nav-links a {
     font-size: 1rem;
     padding: 8px 16px;
@@ -337,7 +337,7 @@
     padding: 60px 20px 20px;
     gap: 20px;
   }
-  
+
   .nav-links a {
     font-size: 1rem;
     padding: 8px 20px;
@@ -360,7 +360,7 @@
   .navbar {
     border-bottom-width: 0.5px;
   }
-  
+
   .search-bar {
     border-width: 0.5px;
   }
@@ -371,7 +371,7 @@
   .nav-links a {
     transition: none;
   }
-  
+
   .navbar-toggle.active span {
     transform: none;
   }
@@ -382,45 +382,45 @@
     background: #1a1a1a;
     border-color: #333;
   }
-  
+
   .logo a {
     color: #ffffff;
   }
-  
+
   .search-bar {
     background: #2d2d2d;
     border-color: #444;
   }
-  
+
   .search-bar input {
     color: #e0e0e0;
   }
-  
+
   .search-bar input::placeholder {
     color: #888;
   }
-  
+
   .search-icon {
     color: #888;
   }
-  
+
   .nav-links {
     background: #1a1a1a;
   }
-  
+
   .nav-links a {
     color: #e0e0e0;
   }
-  
+
   .nav-links a:hover {
     color: #60a5fa;
     background: #2d2d2d;
   }
-  
+
   .navbar-toggle span {
     background: #e0e0e0;
   }
-  
+
   .nav-close {
     color: #e0e0e0;
   }
@@ -434,13 +434,13 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   .navbar-toggle {
     width: 44px;
     height: 44px;
     padding: 12px;
   }
-  
+
   .nav-close {
     width: 44px;
     height: 44px;

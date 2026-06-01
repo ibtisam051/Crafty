@@ -1,0 +1,12 @@
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+
+[tool.isort]
+profile = "black"
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+select = ["E", "F", "W", "I", "S"]
+exclude = ["__pycache__", "migrations", "node_modules", "staticfiles"]
