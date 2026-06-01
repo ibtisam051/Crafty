@@ -13,7 +13,7 @@ RUN apt-get update \
 
 # install pip requirements
 COPY requirements.txt ./
-RUN pip install --upgrade pip
+RUN pip install --upgrade pip wheel setuptools==70.0.0
 RUN pip install -r requirements.txt
 
 # copy project
