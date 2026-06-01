@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -19,10 +19,10 @@ RUN pip install -r requirements.txt
 # copy project
 COPY . /app
 
-# make entrypoint executable
-RUN chmod +x /app/entrypoint.sh
+# make entrypoint executable if possible
+RUN chmod +x /app/entrypoint.sh || true
 
 EXPOSE 8000
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["sh", "/app/entrypoint.sh"]
 CMD ["gunicorn", "crafty_backend.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]

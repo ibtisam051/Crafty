@@ -10,6 +10,7 @@ services:
   web:
     build:
       context: ./backend
+    entrypoint: ["sh", "/app/entrypoint.sh"]
     command: gunicorn crafty_backend.wsgi:application --bind 0.0.0.0:8000 --workers 3
     volumes:
       - ./backend:/app
