@@ -12,7 +12,7 @@
                     {% if product.images.first %}
                         <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" />
                     {% else %}
-                        <img src="/images/products/default.png" alt="{{ product.name }}" />
+                        <img src="/images/products/NoImage.png" alt="{{ product.name }}" />
                     {% endif %}
                     <h3>{{ product.name }}</h3>
                     <p class="product-meta">{{ product.category.name }} • {{ product.artisan.business_name }}</p>
