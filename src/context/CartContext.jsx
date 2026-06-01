@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { useAuth } from './AuthContext';
 import {
   getCart,
   addToCart as apiAddToCart,
@@ -27,10 +28,13 @@ export const CartProvider = ({ children }) => {
     }
   });
   const [loading, setLoading] = useState(false);
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    fetchCart();
-  }, []);
+    if (isAuthenticated) {
+      fetchCart();
+    }
+  }, [isAuthenticated]);
 
   const fetchCart = async () => {
     try {
@@ -57,6 +61,23 @@ export const CartProvider = ({ children }) => {
   }, [cartItems]);
 
   const addToCart = async (product, quantity = 1) => {
+    if (!isAuthenticated) {
+      setCartItems((prev) => {
+        const existing = prev.find(
+          (item) => item.product?.id === product.id || item.id === product.id,
+        );
+        if (existing) {
+          return prev.map((item) =>
+            item.product?.id === product.id || item.id === product.id
+              ? { ...item, quantity: item.quantity + quantity }
+              : item,
+          );
+        }
+        return [...prev, { id: product.id, product, quantity }];
+      });
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await apiAddToCart({ product_id: product.id, quantity });
@@ -64,7 +85,6 @@ export const CartProvider = ({ children }) => {
       return;
     } catch (error) {
       console.error('Error adding to cart (API fallback):', error);
-      // fallback to local cart behavior for unauthorized / no backend access
       setCartItems((prev) => {
         const existing = prev.find(
           (item) => item.product?.id === product.id || item.id === product.id,
@@ -84,6 +104,13 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = async (itemId) => {
+    if (!isAuthenticated) {
+      setCartItems((prev) =>
+        prev.filter((item) => item.id !== itemId && item.product?.id !== itemId),
+      );
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await apiRemoveFromCart({ item_id: itemId });
@@ -100,6 +127,18 @@ export const CartProvider = ({ children }) => {
   };
 
   const updateQuantity = async (itemId, quantity) => {
+    if (!isAuthenticated) {
+      setCartItems((prev) =>
+        prev.map((item) => {
+          if (item.id === itemId || item.product?.id === itemId) {
+            return { ...item, quantity: quantity > 0 ? quantity : 0 };
+          }
+          return item;
+        }),
+      );
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await updateCartItem({ item_id: itemId, quantity });

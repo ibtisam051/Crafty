@@ -107,7 +107,7 @@ function ArtistProfilePage() {
           {artist.products?.map((product) => (
             <div key={product.id} className="artist-product-card">
               <img
-                src={product.images?.[0]?.image || '/images/products/default.png'}
+                src={product.images?.[0]?.image || '/images/products/NoImage.png'}
                 alt={product.name}
               />
               <div className="artist-product-info">

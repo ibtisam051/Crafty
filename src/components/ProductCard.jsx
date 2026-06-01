@@ -46,7 +46,7 @@ function ProductCard({ product, variant = 'home' }) {
 
         <div className="product-image-container">
           <img
-            src={product.images?.[0]?.image || '/images/products/default.png'}
+            src={product.images?.[0]?.image || '/images/products/NoImage.png'}
             alt={product.name}
             className="product-card-image"
           />

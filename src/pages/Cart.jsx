@@ -26,7 +26,7 @@ function Cart() {
         {cartItems.map((item) => {
           const product = item.product || item;
           const categoryName = product.category?.name || product.category || 'Unknown';
-          const imageUrl = product.images?.[0]?.image || '/images/products/default.png';
+          const imageUrl = product.images?.[0]?.image || '/images/products/NoImage.png';
           const price = Number(product.price || 0);
 
           return (
