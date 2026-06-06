@@ -4,7 +4,7 @@ Crafty is a full-stack e-commerce application built with Django, Django REST Fra
 
 ## Overview
 
-- Backend: Django + DRF
+- Backend: Django
 - Frontend: React app built with Create React App and served by Nginx
 - Cache layer: Redis
 - Backend image uses `python:3.12-slim`
@@ -83,8 +83,6 @@ On Windows, Git may convert line endings to CRLF which can break shell scripts i
 
 To avoid this:
 
-- We added a `.gitattributes` file to enforce LF for shell scripts and Dockerfiles.
-- If you cloned the repo on Windows, normalize line endings and re-checkout scripts:
 
 ```powershell
 git rm --cached -r .
@@ -99,7 +97,14 @@ git add backend/entrypoint.sh
 git commit -m "Normalize entrypoint line endings"
 ```
 
-If the backend container exits on startup on another machine, inspect its logs and status:
+Runtime fallback in the Docker image
+
+The backend image includes a small startup wrapper that strips CRLF from
+`/app/entrypoint.sh` automatically. This allows containers to start even if a
+developer accidentally checked out the repo with CRLF before `.gitattributes`
+was added. However it's still best to re-normalize your working copy (see
+above) so future commits don't reintroduce CRLF.
+
 
 ```bash
 docker compose ps

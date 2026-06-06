@@ -29,7 +29,21 @@ COPY . /app
 # make entrypoint executable if possible
 RUN chmod +x /app/entrypoint.sh || true
 
+# Add a small wrapper that normalizes CRLF line endings on the entrypoint
+# and then delegates to the real script. This helps machines that checked out
+# the repository with CRLF line endings before `.gitattributes` was added.
+RUN cat > /usr/local/bin/normalize-entrypoint.sh <<'SH'
+#!/bin/sh
+if [ -f /app/entrypoint.sh ]; then
+    # remove possible CRLF characters from the entrypoint
+    sed -i 's/\r$//' /app/entrypoint.sh || true
+    chmod +x /app/entrypoint.sh || true
+fi
+exec sh /app/entrypoint.sh "$@"
+SH
+RUN chmod +x /usr/local/bin/normalize-entrypoint.sh || true
+
 EXPOSE 8000
 
-ENTRYPOINT ["sh", "/app/entrypoint.sh"]
+ENTRYPOINT ["sh", "/usr/local/bin/normalize-entrypoint.sh"]
 CMD ["gunicorn", "crafty_backend.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]

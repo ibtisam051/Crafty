@@ -9,11 +9,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DOTENV_PATH = BASE_DIR.parent / ".env"
 load_dotenv(DOTENV_PATH)
 
+# Read DEBUG early so we can allow a development fallback for SECRET_KEY
+_DEBUG_ENV = os.getenv("DEBUG", "False") == "True"
+
+# SECRET_KEY is required in production, but allow an explicit dev fallback when DEBUG is True
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 if not SECRET_KEY:
-    raise RuntimeError("DJANGO_SECRET_KEY environment variable is required")
+    if _DEBUG_ENV:
+        # In development it's acceptable to use a clearly-insecure default.
+        # Developers should set DJANGO_SECRET_KEY in production and CI environments.
+        SECRET_KEY = "dev-secret-key-change-me"
+    else:
+        raise RuntimeError("DJANGO_SECRET_KEY environment variable is required")
 
-DEBUG = os.getenv("DEBUG", "False") == "True"
+# Final DEBUG value (used below in config)
+DEBUG = _DEBUG_ENV
 ALLOWED_HOSTS = [
     host.strip()
     for host in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
