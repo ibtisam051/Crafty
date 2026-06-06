@@ -34,12 +34,12 @@ RUN chmod +x /app/entrypoint.sh || true
 # the repository with CRLF line endings before `.gitattributes` was added.
 RUN cat > /usr/local/bin/normalize-entrypoint.sh <<'SH'
 #!/bin/sh
-if [ -f /app/entrypoint.sh ]; then
+if [ -f /app/docker-entrypoint.sh ]; then
     # remove possible CRLF characters from the entrypoint
-    sed -i 's/\r$//' /app/entrypoint.sh || true
-    chmod +x /app/entrypoint.sh || true
+    sed -i 's/\r$//' /app/docker-entrypoint.sh || true
+    chmod +x /app/docker-entrypoint.sh || true
 fi
-exec sh /app/entrypoint.sh "$@"
+exec sh /app/docker-entrypoint.sh "$@"
 SH
 RUN chmod +x /usr/local/bin/normalize-entrypoint.sh || true
 
