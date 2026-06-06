@@ -24,34 +24,102 @@ cp .env.example .env
 
 2. Update `.env` with your values.
 
-3. Build and run the stack:
+3. Build and run the complete stack:
 
 ```bash
 docker compose up --build
 ```
 
-## Access
+4. If you prefer separate build and run steps:
+
+```bash
+docker compose build
+
+docker compose up -d
+```
+
+5. To stop the stack:
+
+```bash
+docker compose down
+```
+
+## Service URLs
+
+When Docker Compose is running, the app is available at:
 
 - Frontend: `http://localhost:3000`
-- Backend: `http://localhost:8000`
+- Backend API: `http://localhost:8000`
+
+If you want to access the Django admin, use:
+
+- Admin: `http://localhost:8000/admin/`
 
 ## Environment variables
 
 The app expects the following values in `.env`:
 
-- `REDIS_URL` — Redis connection URL
+- `REDIS_URL` — Redis connection URL (example: `redis://redis:6379/0`)
 - `DJANGO_SECRET_KEY` — Django secret key
 - `DEBUG` — `True` or `False`
-- `ALLOWED_HOSTS` — comma-separated hostnames
+- `ALLOWED_HOSTS` — comma-separated hostnames (default: `localhost,127.0.0.1`)
 - `CORS_ALLOW_ALL_ORIGINS` — `True` or `False`
 
-## Notes
+## Docker notes
 
-- The backend uses `backend/entrypoint.sh` to run migrations and collect static files before starting Gunicorn.
-- Django now defaults `ALLOWED_HOSTS` to `localhost,127.0.0.1` when the env value is blank.
-- The frontend is built and served by Nginx from `Dockerfile.frontend`.
-- If Docker image pulls fail due to proxy or network errors, set Docker Desktop proxy to `No proxy` or configure `HTTP_PROXY` / `HTTPS_PROXY` correctly, then retry.
-- The Docker build now supports passing `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` into build contexts.
+- `docker compose up --build` rebuilds both frontend and backend images before starting the containers.
+- `frontend` is built from `Dockerfile.frontend` and served by Nginx on port `3000`.
+- `web` is built from `backend/Dockerfile` and served by Gunicorn on port `8000`.
+- The backend container depends on Redis, so Redis must be available for the stack to start successfully.
+- The Docker build supports `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` build args if you need proxy configuration.
+
+### Windows line endings (CRLF) and `entrypoint.sh` failures
+
+On Windows, Git may convert line endings to CRLF which can break shell scripts inside Linux containers and produce errors like:
+
+```
+/app/entrypoint.sh: 2: set: Illegal option -
+```
+
+To avoid this:
+
+- We added a `.gitattributes` file to enforce LF for shell scripts and Dockerfiles.
+- If you cloned the repo on Windows, normalize line endings and re-checkout scripts:
+
+```powershell
+git rm --cached -r .
+git reset --hard
+```
+
+Or convert the script manually and recommit (example using `dos2unix` on WSL or Linux):
+
+```bash
+dos2unix backend/entrypoint.sh
+git add backend/entrypoint.sh
+git commit -m "Normalize entrypoint line endings"
+```
+
+If the backend container exits on startup on another machine, inspect its logs and status:
+
+```bash
+docker compose ps
+docker compose logs web --tail=200
+docker inspect --format='{{.State.ExitCode}}' $(docker compose ps -q web)
+```
+
+To enter a failed container for debugging (if it's still present):
+
+```bash
+docker compose run --rm web sh -c 'cat -v /app/entrypoint.sh'
+```
+
+This will show `^M` characters if CRLF line endings are present.
+
+## Static files and media
+
+- Static files are collected into `backend/staticfiles/` via Django `collectstatic`.
+- Uploaded media files are stored under `backend/media/` during development.
+- `backend/staticfiles/` is generated output and should not be committed to Git.
 
 ## Linting
 
@@ -74,8 +142,6 @@ python -m ruff check .
 python -m black .
 python -m isort .
 ```
-
-If `ruff`, `black`, or `isort` are not recognized as commands on Windows, use the `python -m` form or add your Python `Scripts` folder to `PATH`.
 
 ## Common commands
 

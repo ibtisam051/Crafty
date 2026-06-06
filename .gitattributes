@@ -1,1 +1,7 @@
+# Enforce LF for shell scripts and Dockerfiles to avoid CRLF issues on Windows
+*.sh text eol=lf
+Dockerfile text eol=lf
+Dockerfile.* text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
 * text=auto eol=lf
