@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import HeroSection from '../components/HeroSection';
-import ProductsRow from '../components/ProductsRow';
-import ArtisansSection from '../components/ArtisansSection';
-import { getProducts } from '../services/api';
+import React, { useState, useEffect } from "react";
+import HeroSection from "../components/HeroSection";
+import ProductsRow from "../components/ProductsRow";
+import ArtisansSection from "../components/ArtisansSection";
+import { getProducts } from "../services/api";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -14,7 +14,7 @@ function Home() {
         const response = await getProducts();
         setProducts(response.data.results || response.data);
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error("Error fetching products:", error);
       } finally {
         setLoading(false);
       }
@@ -29,7 +29,11 @@ function Home() {
   return (
     <div className="homepage-container">
       <HeroSection />
-      <ProductsRow products={homepageProducts} title="All Products" showViewAll={true} />
+      <ProductsRow
+        products={homepageProducts}
+        title="All Products"
+        showViewAll={true}
+      />
       <ArtisansSection />
     </div>
   );

@@ -50,6 +50,8 @@ The app expects the following values in `.env`:
 - The backend uses `backend/entrypoint.sh` to run migrations and collect static files before starting Gunicorn.
 - Django now defaults `ALLOWED_HOSTS` to `localhost,127.0.0.1` when the env value is blank.
 - The frontend is built and served by Nginx from `Dockerfile.frontend`.
+- If Docker image pulls fail due to proxy or network errors, set Docker Desktop proxy to `No proxy` or configure `HTTP_PROXY` / `HTTPS_PROXY` correctly, then retry.
+- The Docker build now supports passing `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` into build contexts.
 
 ## Linting
 

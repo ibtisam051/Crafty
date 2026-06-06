@@ -1,6 +1,6 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import ProductsRow from '../components/ProductsRow';
-import { getProducts, getCategories } from '../services/api';
+import React, { useState, useMemo, useEffect } from "react";
+import ProductsRow from "../components/ProductsRow";
+import { getProducts, getCategories } from "../services/api";
 
 function ProductPage() {
   const [products, setProducts] = useState([]);
@@ -13,15 +13,20 @@ function ProductPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [productsRes, categoriesRes] = await Promise.all([getProducts(), getCategories()]);
+        const [productsRes, categoriesRes] = await Promise.all([
+          getProducts(),
+          getCategories(),
+        ]);
         setProducts(productsRes.data.results || productsRes.data);
         const cats = categoriesRes.data.results || categoriesRes.data;
         setCategories(cats);
         const filters = {};
-        cats.forEach((cat) => (filters[cat.name] = true));
+        cats.forEach((cat) => {
+          filters[cat.name] = true;
+        });
         setSelectedFilters(filters);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
@@ -88,13 +93,23 @@ function ProductPage() {
 
           <h4 className="sidebar-title">PRICE</h4>
           <div className="price-filter">
-            <input type="range" min="0" max="300" value={maxPrice} onChange={handlePriceChange} />
+            <input
+              type="range"
+              min="0"
+              max="300"
+              value={maxPrice}
+              onChange={handlePriceChange}
+            />
             <p>Max. ${maxPrice}.00</p>
           </div>
         </aside>
 
         <main className="product-list-container">
-          <ProductsRow products={displayedProducts} title="" showViewAll={false} />
+          <ProductsRow
+            products={displayedProducts}
+            title=""
+            showViewAll={false}
+          />
           {displayCount < filteredProducts.length && (
             <div className="load-more">
               <button onClick={handleShowMore}>Show more products</button>

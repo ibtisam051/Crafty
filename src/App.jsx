@@ -1,19 +1,19 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { CartProvider } from './context/CartContext';
-import { AuthProvider } from './context/AuthContext';
-import Cart from './pages/Cart';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import ProductPage from './pages/ProductPage';
-import ProductDetail from './pages/ProductDetail';
-import Checkout from './pages/Checkout';
-import ArtistPage from './pages/ArtistPage';
-import ArtistProfilePage from './pages/ArtistProfilePage';
-import Login from './pages/Login';
-import './styles/global.css';
-import About from './pages/About';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { CartProvider } from "./context/CartContext";
+import { AuthProvider } from "./context/AuthContext";
+import Cart from "./pages/Cart";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import ProductPage from "./pages/ProductPage";
+import ProductDetail from "./pages/ProductDetail";
+import Checkout from "./pages/Checkout";
+import ArtistPage from "./pages/ArtistPage";
+import ArtistProfilePage from "./pages/ArtistProfilePage";
+import Login from "./pages/Login";
+import "./styles/global.css";
+import About from "./pages/About";
 
 function App() {
   return (

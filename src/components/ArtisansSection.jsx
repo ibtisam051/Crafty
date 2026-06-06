@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import ArtisanCard from './ArtisanCard';
-import { getArtisans } from '../services/api';
-import '../styles/artisans.css';
+import React, { useState, useEffect } from "react";
+import ArtisanCard from "./ArtisanCard";
+import { getArtisans } from "../services/api";
+import "../styles/artisans.css";
 
 function ArtisansSection() {
   const [artisans, setArtisans] = useState([]);
@@ -13,7 +13,7 @@ function ArtisansSection() {
         const response = await getArtisans();
         setArtisans(response.data.results || response.data);
       } catch (error) {
-        console.error('Error fetching artisans:', error);
+        console.error("Error fetching artisans:", error);
       } finally {
         setLoading(false);
       }

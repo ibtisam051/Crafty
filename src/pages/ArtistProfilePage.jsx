@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { getArtisan } from '../services/api';
-import '../styles/artistProfile.css';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getArtisan } from "../services/api";
+import "../styles/artistProfile.css";
 
 function ArtistProfilePage() {
   const { id } = useParams();
@@ -15,7 +15,7 @@ function ArtistProfilePage() {
         const response = await getArtisan(id);
         setArtist(response.data);
       } catch (error) {
-        console.error('Error fetching artist profile:', error);
+        console.error("Error fetching artist profile:", error);
       } finally {
         setLoading(false);
       }
@@ -35,11 +35,11 @@ function ArtistProfilePage() {
         {Array(fullStars)
           .fill(0)
           .map((_, i) => (
-            <span key={`full-${i}`} style={{ color: '#fbbf24' }}>
+            <span key={`full-${i}`} style={{ color: "#fbbf24" }}>
               ★
             </span>
           ))}
-        {hasHalfStar && <span style={{ color: '#fbbf24' }}>☆</span>}
+        {hasHalfStar && <span style={{ color: "#fbbf24" }}>☆</span>}
       </>
     );
   };
@@ -49,7 +49,7 @@ function ArtistProfilePage() {
       <div className="artist-profile-container">
         <div className="artist-profile-left">
           <img
-            src={artist.image || '/images/artist/artist.png'}
+            src={artist.image || "/images/artist/artist.png"}
             alt={artist.business_name}
             className="artist-profile-image"
           />
@@ -61,18 +61,24 @@ function ArtistProfilePage() {
               <h1 className="artist-profile-name">{artist.business_name}</h1>
               <div className="artist-profile-rating">
                 {renderStars(artist.average_rating || 0)}
-                <span style={{ marginLeft: '6px', color: '#777', fontSize: '14px' }}>
+                <span
+                  style={{ marginLeft: "6px", color: "#777", fontSize: "14px" }}
+                >
                   · {artist.total_sales || 0} sales
                 </span>
               </div>
             </div>
-            <button className="artist-profile-like-btn" onClick={() => setLiked(!liked)}>
-              {liked ? '❤️' : '🤍'}
+            <button
+              className="artist-profile-like-btn"
+              onClick={() => setLiked(!liked)}
+            >
+              {liked ? "❤️" : "🤍"}
             </button>
           </div>
 
           <p className="artist-profile-bio">
-            {artist.bio || `Crafts exceptional pieces in ${artist.craft_specialty}.`}
+            {artist.bio ||
+              `Crafts exceptional pieces in ${artist.craft_specialty}.`}
           </p>
 
           <div className="artist-profile-meta">
@@ -82,7 +88,9 @@ function ArtistProfilePage() {
             </div>
             <div className="meta-item">
               <span className="meta-label">Experience</span>
-              <span className="meta-value">{artist.experience_years || 0} years</span>
+              <span className="meta-value">
+                {artist.experience_years || 0} years
+              </span>
             </div>
           </div>
         </div>
@@ -94,9 +102,9 @@ function ArtistProfilePage() {
           <div
             style={{
               marginLeft: 8,
-              background: '#eef2ff',
-              color: '#3b82f6',
-              padding: '4px 8px',
+              background: "#eef2ff",
+              color: "#3b82f6",
+              padding: "4px 8px",
               borderRadius: 6,
             }}
           >
@@ -107,7 +115,9 @@ function ArtistProfilePage() {
           {artist.products?.map((product) => (
             <div key={product.id} className="artist-product-card">
               <img
-                src={product.images?.[0]?.image || '/images/products/NoImage.png'}
+                src={
+                  product.images?.[0]?.image || "/images/products/NoImage.png"
+                }
                 alt={product.name}
               />
               <div className="artist-product-info">

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getArtisans } from '../services/api';
-import '../styles/artistPage.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getArtisans } from "../services/api";
+import "../styles/artistPage.css";
 
 function ArtistPage() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ function ArtistPage() {
           }, {}),
         );
       } catch (error) {
-        console.error('Error fetching artisans:', error);
+        console.error("Error fetching artisans:", error);
       } finally {
         setLoading(false);
       }
@@ -39,7 +39,9 @@ function ArtistPage() {
 
   const toggleType = (typeName) => {
     setSelectedTypes((prev) =>
-      prev.includes(typeName) ? prev.filter((t) => t !== typeName) : [...prev, typeName],
+      prev.includes(typeName)
+        ? prev.filter((t) => t !== typeName)
+        : [...prev, typeName],
     );
   };
 
@@ -52,7 +54,7 @@ function ArtistPage() {
 
   const artistTypes = Array.from(
     artists.reduce((acc, artist) => {
-      const type = artist.craft_specialty || 'Other';
+      const type = artist.craft_specialty || "Other";
       acc.set(type, (acc.get(type) || 0) + 1);
       return acc;
     }, new Map()),
@@ -63,7 +65,9 @@ function ArtistPage() {
       ? artists
       : artists.filter((a) => selectedTypes.includes(a.craft_specialty));
 
-  const displayedArtists = showMore ? filteredArtists : filteredArtists.slice(0, 6);
+  const displayedArtists = showMore
+    ? filteredArtists
+    : filteredArtists.slice(0, 6);
 
   if (loading) return <div>Loading artisans...</div>;
 
@@ -93,14 +97,23 @@ function ArtistPage() {
                   <p className="artist-name">{artist.business_name}</p>
                   <p className="artist-type">{artist.craft_specialty}</p>
                 </div>
-                <button className="artist-like-btn" onClick={() => toggleLike(artist.id)}>
-                  {likedArtists[artist.id] ? '❤️' : '🤍'}
+                <button
+                  className="artist-like-btn"
+                  onClick={() => toggleLike(artist.id)}
+                >
+                  {likedArtists[artist.id] ? "❤️" : "🤍"}
                 </button>
               </div>
               <div className="artist-card-image">
-                <img src={artist.image || '/images/artist/artist.png'} alt={artist.business_name} />
+                <img
+                  src={artist.image || "/images/artist/artist.png"}
+                  alt={artist.business_name}
+                />
               </div>
-              <button className="view-profile-btn" onClick={() => handleViewProfile(artist.id)}>
+              <button
+                className="view-profile-btn"
+                onClick={() => handleViewProfile(artist.id)}
+              >
                 View Profile
               </button>
             </div>

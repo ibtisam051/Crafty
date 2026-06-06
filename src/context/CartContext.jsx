@@ -1,11 +1,11 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import { useAuth } from './AuthContext';
+import React, { createContext, useState, useContext, useEffect } from "react";
+import { useAuth } from "./AuthContext";
 import {
   getCart,
   addToCart as apiAddToCart,
   updateCartItem,
   removeFromCart as apiRemoveFromCart,
-} from '../services/api';
+} from "../services/api";
 
 const CartContext = createContext();
 
@@ -13,7 +13,7 @@ const CartContext = createContext();
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error('useCart must be used within a CartProvider');
+    throw new Error("useCart must be used within a CartProvider");
   }
   return context;
 };
@@ -21,7 +21,7 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(() => {
     try {
-      const stored = localStorage.getItem('localCart');
+      const stored = localStorage.getItem("localCart");
       return stored ? JSON.parse(stored) : [];
     } catch (e) {
       return [];
@@ -42,11 +42,13 @@ export const CartProvider = ({ children }) => {
       const items = response.data.items || [];
       setCartItems(
         items.map((i) =>
-          i.product ? { ...i, id: i.id, product: i.product, quantity: i.quantity } : i,
+          i.product
+            ? { ...i, id: i.id, product: i.product, quantity: i.quantity }
+            : i,
         ),
       );
     } catch (error) {
-      console.error('Error fetching cart:', error);
+      console.error("Error fetching cart:", error);
       // fallback: keep local cart state
     }
   };
@@ -54,7 +56,7 @@ export const CartProvider = ({ children }) => {
   // persist cart to localStorage so anonymous adds survive navigation/reloads
   useEffect(() => {
     try {
-      localStorage.setItem('localCart', JSON.stringify(cartItems));
+      localStorage.setItem("localCart", JSON.stringify(cartItems));
     } catch (e) {
       // ignore
     }
@@ -84,7 +86,7 @@ export const CartProvider = ({ children }) => {
       setCartItems(response.data.items || []);
       return;
     } catch (error) {
-      console.error('Error adding to cart (API fallback):', error);
+      console.error("Error adding to cart (API fallback):", error);
       setCartItems((prev) => {
         const existing = prev.find(
           (item) => item.product?.id === product.id || item.id === product.id,
@@ -106,7 +108,9 @@ export const CartProvider = ({ children }) => {
   const removeFromCart = async (itemId) => {
     if (!isAuthenticated) {
       setCartItems((prev) =>
-        prev.filter((item) => item.id !== itemId && item.product?.id !== itemId),
+        prev.filter(
+          (item) => item.id !== itemId && item.product?.id !== itemId,
+        ),
       );
       return;
     }
@@ -117,9 +121,11 @@ export const CartProvider = ({ children }) => {
       setCartItems(response.data.items || []);
       return;
     } catch (error) {
-      console.error('Error removing from cart (API fallback):', error);
+      console.error("Error removing from cart (API fallback):", error);
       setCartItems((prev) =>
-        prev.filter((item) => item.id !== itemId && item.product?.id !== itemId),
+        prev.filter(
+          (item) => item.id !== itemId && item.product?.id !== itemId,
+        ),
       );
     } finally {
       setLoading(false);
@@ -145,7 +151,7 @@ export const CartProvider = ({ children }) => {
       setCartItems(response.data.items || []);
       return;
     } catch (error) {
-      console.error('Error updating cart (API fallback):', error);
+      console.error("Error updating cart (API fallback):", error);
       setCartItems((prev) =>
         prev.map((item) => {
           if (item.id === itemId || item.product?.id === itemId) {

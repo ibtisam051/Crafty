@@ -1,10 +1,11 @@
-import React from 'react';
-import { useCart } from '../context/CartContext';
-import { Link } from 'react-router-dom';
-import '../styles/cart.css';
+import React from "react";
+import { useCart } from "../context/CartContext";
+import { Link } from "react-router-dom";
+import "../styles/cart.css";
 
 function Cart() {
-  const { cartItems, removeFromCart, updateQuantity, cartTotal, clearCart } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, cartTotal, clearCart } =
+    useCart();
 
   if (cartItems.length === 0) {
     return (
@@ -25,8 +26,10 @@ function Cart() {
       <div className="cart-items">
         {cartItems.map((item) => {
           const product = item.product || item;
-          const categoryName = product.category?.name || product.category || 'Unknown';
-          const imageUrl = product.images?.[0]?.image || '/images/products/NoImage.png';
+          const categoryName =
+            product.category?.name || product.category || "Unknown";
+          const imageUrl =
+            product.images?.[0]?.image || "/images/products/NoImage.png";
           const price = Number(product.price || 0);
 
           return (
@@ -36,9 +39,17 @@ function Cart() {
                 <h3>{product.name}</h3>
                 <p>{categoryName}</p>
                 <div className="cart-item-controls">
-                  <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
+                  <button
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                  >
+                    -
+                  </button>
                   <span>{item.quantity}</span>
-                  <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+                  <button
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                  >
+                    +
+                  </button>
                 </div>
               </div>
               <div className="cart-item-price">

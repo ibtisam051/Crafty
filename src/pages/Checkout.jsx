@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
-import { createOrder } from '../services/api';
-import '../styles/checkout.css';
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import { createOrder } from "../services/api";
+import "../styles/checkout.css";
 
 function Checkout() {
   const location = useLocation();
@@ -12,16 +12,16 @@ function Checkout() {
   const quantity = location.state?.quantity || 1;
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    town: '',
-    date: '',
-    cardNumber: '',
-    cardHolder: '',
-    cvc: '',
-    paymentMethod: 'credit-card',
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    town: "",
+    date: "",
+    cardNumber: "",
+    cardHolder: "",
+    cvc: "",
+    paymentMethod: "credit-card",
     agreeMarketing: false,
     agreeTerms: false,
   });
@@ -30,25 +30,25 @@ function Checkout() {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.agreeTerms) {
-      alert('Please agree to terms and conditions');
+      alert("Please agree to terms and conditions");
       return;
     }
     try {
       const shippingAddress = `${formData.address}, ${formData.town}`;
       await createOrder({ shipping_address: shippingAddress });
       clearCart();
-      alert('Order placed successfully!');
-      navigate('/');
+      alert("Order placed successfully!");
+      navigate("/");
     } catch (error) {
-      console.error('Error placing order:', error);
-      alert('Error placing order. Please try again.');
+      console.error("Error placing order:", error);
+      alert("Error placing order. Please try again.");
     }
   };
 
@@ -125,13 +125,13 @@ function Checkout() {
                   type="radio"
                   name="paymentMethod"
                   value="credit-card"
-                  checked={formData.paymentMethod === 'credit-card'}
+                  checked={formData.paymentMethod === "credit-card"}
                   onChange={handleChange}
                 />
                 <span>Credit Card</span>
               </label>
 
-              {formData.paymentMethod === 'credit-card' && (
+              {formData.paymentMethod === "credit-card" && (
                 <div className="card-details">
                   <div className="form-row">
                     <div className="form-group">
@@ -199,13 +199,13 @@ function Checkout() {
                   type="radio"
                   name="paymentMethod"
                   value="paypal"
-                  checked={formData.paymentMethod === 'paypal'}
+                  checked={formData.paymentMethod === "paypal"}
                   onChange={handleChange}
                 />
                 <span>PayPal</span>
               </label>
 
-              {formData.paymentMethod === 'paypal' && (
+              {formData.paymentMethod === "paypal" && (
                 <div className="paypal-logo">
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/120px-PayPal.svg.png?20241230110020"
@@ -250,7 +250,10 @@ function Checkout() {
               <span>🔒</span>
               <div>
                 <p>All your data are safe</p>
-                <p>We are using the most advanced security to keep your information safe</p>
+                <p>
+                  We are using the most advanced security to keep your
+                  information safe
+                </p>
               </div>
             </div>
           </div>
@@ -267,8 +270,14 @@ function Checkout() {
               <div className="item-details">
                 <h4>{product.name}</h4>
                 <div className="item-rating">
-                  <span style={{ color: '#fbbf24' }}>★★★★★</span>
-                  <span style={{ fontSize: '12px', color: '#777', marginLeft: '4px' }}>
+                  <span style={{ color: "#fbbf24" }}>★★★★★</span>
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      color: "#777",
+                      marginLeft: "4px",
+                    }}
+                  >
                     440 Reviewers
                   </span>
                 </div>
@@ -277,7 +286,10 @@ function Checkout() {
           ) : (
             cartItems.map((item) => (
               <div key={item.id} className="order-item">
-                <img src={item.product.images?.[0]?.image} alt={item.product.name} />
+                <img
+                  src={item.product.images?.[0]?.image}
+                  alt={item.product.name}
+                />
                 <div className="item-details">
                   <h4>{item.product.name}</h4>
                   <p>Qty: {item.quantity}</p>

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import ArtisansSection from '../components/ArtisansSection';
-import '../styles/about.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import ArtisansSection from "../components/ArtisansSection";
+import "../styles/about.css";
 
 function About() {
   return (
@@ -17,9 +17,10 @@ function About() {
         <div className="about-content">
           <h2>Our Mission</h2>
           <p>
-            At CRAFTY, we believe in the power of handmade. Our mission is to create a platform
-            where talented artisans can showcase their unique creations and connect with people who
-            appreciate authentic craftsmanship.
+            At CRAFTY, we believe in the power of handmade. Our mission is to
+            create a platform where talented artisans can showcase their unique
+            creations and connect with people who appreciate authentic
+            craftsmanship.
           </p>
           <div className="mission-stats">
             <div className="stat">
@@ -50,12 +51,16 @@ function About() {
             <div className="value-card">
               <div className="value-icon">🤝</div>
               <h3>Fair Trade</h3>
-              <p>Artisans receive fair compensation for their exceptional work.</p>
+              <p>
+                Artisans receive fair compensation for their exceptional work.
+              </p>
             </div>
             <div className="value-card">
               <div className="value-icon">🌱</div>
               <h3>Sustainability</h3>
-              <p>We promote eco-friendly materials and sustainable practices.</p>
+              <p>
+                We promote eco-friendly materials and sustainable practices.
+              </p>
             </div>
             <div className="value-card">
               <div className="value-icon">❤️</div>
@@ -69,7 +74,10 @@ function About() {
       <section className="about-cta">
         <div className="cta-content">
           <h2>Join Our Community</h2>
-          <p>Whether you're an artist or an art lover, there's a place for you here.</p>
+          <p>
+            Whether you're an artist or an art lover, there's a place for you
+            here.
+          </p>
           <div className="cta-buttons">
             <Link to="/artist" className="cta-btn primary">
               Browse All Artists
